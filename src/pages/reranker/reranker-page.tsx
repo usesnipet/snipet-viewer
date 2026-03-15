@@ -5,24 +5,10 @@ import { RerankerForm } from "./_components/reranker-form";
 import { RerankerService } from "../../services/reranker-service";
 import { RerankerConfig } from "../../types/reranker";
 import { Modal } from "../../components/modal";
-import { Loader2 } from "lucide-react";
 
 export function RerankerPage() {
-  const [rerankers, setRerankers] = useState<RerankerConfig[]>([]);
-  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingReranker, setEditingReranker] = useState<RerankerConfig | null>(null);
-
-  const fetchData = async () => {
-    setLoading(true);
-    const data = await RerankerService.getRerankers();
-    setRerankers([...data]);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleCreate = () => {
     setEditingReranker(null);
@@ -37,7 +23,6 @@ export function RerankerPage() {
   const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this re-ranker configuration?")) {
       await RerankerService.deleteReranker(id);
-      fetchData();
     }
   };
 
@@ -51,19 +36,7 @@ export function RerankerPage() {
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Re-rankers</h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm">Configure models to refine search results and improve precision.</p>
           </header>
-
-          {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
-            </div>
-          ) : (
-            <RerankerList
-              rerankers={rerankers}
-              onCreate={handleCreate}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          )}
+          <RerankerList />
         </div>
       </main>
 
@@ -76,7 +49,6 @@ export function RerankerPage() {
           initialData={editingReranker}
           onSuccess={() => {
             setIsModalOpen(false);
-            fetchData();
           }}
         />
       </Modal>

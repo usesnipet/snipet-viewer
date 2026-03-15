@@ -4,6 +4,11 @@ import { pluginTs } from "@kubb/plugin-ts";
 import { pluginClient } from "@kubb/plugin-client";
 import { pluginReactQuery } from "@kubb/plugin-react-query";
 
+/**
+ * A URL da API usada pelos hooks é aplicada em tempo de build via Vite:
+ * - Defina VITE_API_URL no .env (ex.: VITE_API_URL="http://localhost:8852")
+ * - O vite.config.ts injeta AXIOS_BASE para o client axios usado pelo gen
+ */
 export default defineConfig({
   root: ".",
   input: {

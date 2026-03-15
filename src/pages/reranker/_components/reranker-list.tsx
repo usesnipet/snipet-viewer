@@ -1,22 +1,17 @@
-import { RerankerConfig } from "../../../types/reranker";
 import { Card, CardHeader, CardContent } from "../../../components/card";
 import { Button } from "../../../components/button";
 import { Badge } from "../../../components/badge";
 import { Plus, Edit2, Trash2, Layers } from "lucide-react";
 import { formatDate } from "../../../lib/utils";
+import { useGetApiV1Rerankers } from "@/gen";
 
-interface RerankerListProps {
-  rerankers: RerankerConfig[];
-  onCreate: () => void;
-  onEdit: (reranker: RerankerConfig) => void;
-  onDelete: (id: string) => void;
-}
+export function RerankerList() {
+  const { data: rerankers } = useGetApiV1Rerankers();
 
-export function RerankerList({ rerankers, onCreate, onEdit, onDelete }: RerankerListProps) {
   return (
     <Card>
-      <CardHeader 
-        title="Configured Re-rankers" 
+      <CardHeader
+        title="Configured Re-rankers"
         description="Active Re-ranker connections for your search pipelines."
         action={
           <Button onClick={onCreate} size="sm">
@@ -56,11 +51,11 @@ export function RerankerList({ rerankers, onCreate, onEdit, onDelete }: Reranker
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <Badge variant="info">{reranker.provider}</Badge>
+                      <Badge variant="info">{reranker.type}</Badge>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-                        {reranker.model}
+                        {reranker.config.model}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
