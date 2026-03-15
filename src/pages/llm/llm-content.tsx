@@ -36,11 +36,11 @@ export function LLMContent() {
 
   return (
     <div className="space-y-8">
-      <LLMList 
-        llms={llms} 
-        onEdit={handleEdit} 
-        onDelete={handleDelete} 
-        onCreate={handleCreate} 
+      <LLMList
+        llms={llms}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onCreate={handleCreate}
       />
 
       <Modal
@@ -48,12 +48,12 @@ export function LLMContent() {
         onClose={() => setIsModalOpen(false)}
         title={editingLLM ? "Edit LLM Configuration" : "Add New LLM Provider"}
       >
-        <LLMForm 
-          initialData={editingLLM} 
+        <LLMForm
+          initialData={editingLLM}
           onSuccess={() => {
             setIsModalOpen(false);
             fetchLLMs();
-          }} 
+          }}
         />
       </Modal>
     </div>

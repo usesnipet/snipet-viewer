@@ -36,11 +36,11 @@ export function EmbeddingContent() {
 
   return (
     <div className="space-y-8">
-      <EmbeddingList 
-        profiles={profiles} 
-        onEdit={handleEdit} 
-        onDelete={handleDelete} 
-        onCreate={handleCreate} 
+      <EmbeddingList
+        profiles={profiles}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onCreate={handleCreate}
       />
 
       <Modal
@@ -48,12 +48,12 @@ export function EmbeddingContent() {
         onClose={() => setIsModalOpen(false)}
         title={editingProfile ? "Edit Embedding Profile" : "Create Embedding Profile"}
       >
-        <EmbeddingForm 
-          initialData={editingProfile} 
+        <EmbeddingForm
+          initialData={editingProfile}
           onSuccess={() => {
             setIsModalOpen(false);
             fetchProfiles();
-          }} 
+          }}
         />
       </Modal>
     </div>

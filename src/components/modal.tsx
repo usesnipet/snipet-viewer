@@ -4,14 +4,14 @@ import { X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "./button";
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
 }
 
-export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+export const Modal = ({ isOpen, onClose, title, children }) => {
   if (typeof document === "undefined") return null;
 
   return createPortal(

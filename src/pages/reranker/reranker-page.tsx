@@ -44,7 +44,7 @@ export function RerankerPage() {
   return (
     <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Sidebar />
-      
+
       <main className="flex-1 p-6 md:p-10 overflow-y-auto">
         <div className="max-w-[1600px] mx-auto space-y-10">
           <header className="flex flex-col gap-2">
@@ -57,27 +57,27 @@ export function RerankerPage() {
               <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
             </div>
           ) : (
-            <RerankerList 
-              rerankers={rerankers} 
-              onCreate={handleCreate} 
-              onEdit={handleEdit} 
-              onDelete={handleDelete} 
+            <RerankerList
+              rerankers={rerankers}
+              onCreate={handleCreate}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           )}
         </div>
       </main>
 
-      <Modal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         title={editingReranker ? "Edit Re-ranker" : "Add Re-ranker"}
       >
-        <RerankerForm 
-          initialData={editingReranker} 
+        <RerankerForm
+          initialData={editingReranker}
           onSuccess={() => {
             setIsModalOpen(false);
             fetchData();
-          }} 
+          }}
         />
       </Modal>
     </div>

@@ -139,17 +139,17 @@ export function KnowledgeSourceForm({ initialData, onSuccess }: KnowledgeSourceF
           <div className="p-4 bg-indigo-50/50 dark:bg-indigo-900/10 rounded-xl border border-indigo-100 dark:border-indigo-900/30 space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-sm font-bold text-indigo-900 dark:text-indigo-400">RAG Configuration</h4>
-              <Button 
-                type="button" 
-                variant="outline" 
-                size="sm" 
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
                 className="h-7 px-2 text-[10px]"
                 onClick={() => setIsProfileModalOpen(true)}
               >
                 <Plus className="w-3 h-3 mr-1" /> New Profile
               </Button>
             </div>
-            
+
             <Select
               label="Embedding Profile"
               options={[
@@ -178,12 +178,12 @@ export function KnowledgeSourceForm({ initialData, onSuccess }: KnowledgeSourceF
         onClose={() => setIsProfileModalOpen(false)}
         title="Create Embedding Profile"
       >
-        <EmbeddingForm 
-          initialData={null} 
+        <EmbeddingForm
+          initialData={null}
           onSuccess={() => {
             setIsProfileModalOpen(false);
             fetchData();
-          }} 
+          }}
         />
       </Modal>
     </>

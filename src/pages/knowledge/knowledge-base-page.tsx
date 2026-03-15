@@ -41,7 +41,7 @@ export function KnowledgeBasePage() {
   return (
     <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Sidebar />
-      
+
       <main className="flex-1 p-6 md:p-10 overflow-y-auto">
         <div className="max-w-[1600px] mx-auto space-y-10">
           <header className="flex flex-col gap-2">
@@ -55,9 +55,9 @@ export function KnowledgeBasePage() {
             </div>
           ) : (
             <section>
-              <KnowledgeBaseList 
-                bases={bases} 
-                onEdit={handleEditBase} 
+              <KnowledgeBaseList
+                bases={bases}
+                onEdit={handleEditBase}
                 onCreate={handleCreateBase}
                 onDelete={async (id) => {
                   await KnowledgeService.deleteBase(id);
@@ -69,18 +69,18 @@ export function KnowledgeBasePage() {
         </div>
       </main>
 
-      <Modal 
-        isOpen={isBaseModalOpen} 
-        onClose={() => setIsBaseModalOpen(false)} 
+      <Modal
+        isOpen={isBaseModalOpen}
+        onClose={() => setIsBaseModalOpen(false)}
         title={editingBase ? "Edit Knowledge Base" : "Create Knowledge Base"}
       >
-        <KnowledgeBaseForm 
-          initialData={editingBase} 
+        <KnowledgeBaseForm
+          initialData={editingBase}
           sources={sources}
           onSuccess={() => {
             setIsBaseModalOpen(false);
             fetchData();
-          }} 
+          }}
         />
       </Modal>
     </div>

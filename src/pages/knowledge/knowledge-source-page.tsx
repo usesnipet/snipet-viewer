@@ -36,7 +36,7 @@ export function KnowledgeSourcePage() {
   return (
     <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Sidebar />
-      
+
       <main className="flex-1 p-6 md:p-10 overflow-y-auto">
         <div className="max-w-[1600px] mx-auto space-y-10">
           <header className="flex flex-col gap-2">
@@ -50,9 +50,9 @@ export function KnowledgeSourcePage() {
             </div>
           ) : (
             <section className="space-y-8">
-              <KnowledgeSourceList 
-                sources={sources} 
-                onEdit={handleEditSource} 
+              <KnowledgeSourceList
+                sources={sources}
+                onEdit={handleEditSource}
                 onCreate={handleCreateSource}
               />
             </section>
@@ -60,17 +60,17 @@ export function KnowledgeSourcePage() {
         </div>
       </main>
 
-      <Modal 
-        isOpen={isSourceModalOpen} 
-        onClose={() => setIsSourceModalOpen(false)} 
+      <Modal
+        isOpen={isSourceModalOpen}
+        onClose={() => setIsSourceModalOpen(false)}
         title={editingSource ? "Edit Knowledge Source" : "Create Knowledge Source"}
       >
-        <KnowledgeSourceForm 
-          initialData={editingSource} 
+        <KnowledgeSourceForm
+          initialData={editingSource}
           onSuccess={() => {
             setIsSourceModalOpen(false);
             fetchData();
-          }} 
+          }}
         />
       </Modal>
     </div>
