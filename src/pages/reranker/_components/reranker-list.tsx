@@ -3,13 +3,15 @@ import { Button } from "../../../components/button";
 import { Badge } from "../../../components/badge";
 import { Plus, Edit2, Trash2, Layers } from "lucide-react";
 import { formatDate } from "../../../lib/utils";
-import { useDeleteApiV1RerankersId, useGetApiV1RerankersSuspense } from "@/gen";
+import { getApiV1RerankersQueryKey, useDeleteApiV1RerankersId, useGetApiV1RerankersSuspense } from "@/gen";
 import { DialogType } from "@/dialogs";
 import { useDialog } from "@/hooks/use-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Reranker } from "@/types";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function RerankerList() {
+  const { invalidateQueries } = useQueryClient();
   const { data: rerankers, error } = useGetApiV1RerankersSuspense();
   const { mutate: deleteReranker } = useDeleteApiV1RerankersId();
   const { openDialog, closeDialog } = useDialog();
@@ -29,7 +31,7 @@ export function RerankerList() {
     });
   };
 
-  const handleDelete = (id: Reranker["id"]) => {
+  const handleDelete = (id: string) => {
     openDialog({
       type: DialogType.CONFIRM,
       props: {
@@ -43,6 +45,7 @@ export function RerankerList() {
               {
                 onSuccess: () => {
                   toast({ title: "Re-ranker deleted successfully" });
+                  invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
                   closeDialog(DialogType.CONFIRM);
                 },
                 onError: () => {

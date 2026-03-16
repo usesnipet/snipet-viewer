@@ -5,11 +5,14 @@ import { Reranker } from '@/types';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
-import { useGetApiV1RerankersSchema } from '@/gen';
+import { getApiV1RerankersQueryKey, useGetApiV1Rerankers, useGetApiV1RerankersSchema, usePatchApiV1RerankersId, usePostApiV1Rerankers } from '@/gen';
 import { FormInput } from '@/components/form/input';
 import { FormSelect } from '@/components/form/select';
 import { SchemaForm } from '@/components/schema-form';
 import { Form } from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
+import { DialogType } from '.';
+import { useQueryClient } from '@tanstack/react-query';
 
 export type CreateOrUpdateRerankerDialogProps = {
   reranker?: Reranker;
@@ -22,6 +25,8 @@ const baseSchema = z.object({
 type BaseValues = z.infer<typeof baseSchema>;
 
 export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateRerankerDialogProps) => {
+  const { toast } = useToast();
+  const { closeDialog } = useDialog();
 
   const isEditing = !!reranker;
   const form = useForm<BaseValues>({
@@ -32,21 +37,49 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
     },
   });
 
+  const { invalidateQueries } = useQueryClient();
+
   const { data: schemas = [] } = useGetApiV1RerankersSchema();
 
+  const { mutate: createReranker } = usePostApiV1Rerankers();
+  const { mutate: updateReranker } = usePatchApiV1RerankersId();
+
+
   const selectedType = useWatch({ control: form.control, name: "type" });
-  console.log(selectedType);
   const currentSchema = schemas.find(s => s.targetId === selectedType)?.schema;
 
   const onSubmit = async (baseValues: BaseValues, configValues: any) => {
-    console.log("submit", baseValues, configValues);
-    // const finalData = {
-    //   ...baseValues,
-    //   config: configValues,
-    // };
+
+    const finalData = {
+      ...baseValues,
+      config: configValues,
+    };
+
+    if (isEditing) {
+      updateReranker({ id: reranker?.id, data: finalData }, {
+        onSuccess: () => {
+          toast({ title: "Re-ranker updated successfully" });
+          invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+          closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
+        },
+        onError: () => {
+          toast({ title: "Failed to update re-ranker", variant: "destructive" });
+        },
+      });
+    } else {
+      createReranker({ data: finalData }, {
+        onSuccess: () => {
+          toast({ title: "Re-ranker created successfully" });
+          invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+          closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
+        },
+        onError: () => {
+          toast({ title: "Failed to create re-ranker", variant: "destructive" });
+        },
+      });
+    }
   };
 
-  console.log(currentSchema);
 
   return (
     <DialogContent>
