@@ -1,49 +1,41 @@
 import React, { createContext, useCallback, useState } from 'react';
 
 import { Dialog } from '@/components/ui/dialog';
+import { DialogType, dialogs } from '@/dialogs';
 
-export type DialogComponents = Record<string, React.ComponentType<any>>;
+export type DialogComponents = Record<DialogType, React.ComponentType<any>>;
 
-export type DialogKey<D extends DialogComponents> = Extract<keyof D, string>;
+export type DialogProps<T extends DialogType> =
+  Parameters<(typeof dialogs)[T]>[0];
 
-export type DialogProps<
-  D extends DialogComponents,
-  T extends DialogKey<D>,
-> = React.ComponentProps<D[T]>;
-
-export type OpenDialogOptions<
-  D extends DialogComponents,
-  T extends DialogKey<D> = DialogKey<D>,
-> = {
+export type OpenDialogOptions<T extends DialogType = DialogType> = {
   type: T;
-  props?: DialogProps<D, T>;
+  props: DialogProps<T>;
   onClose?: () => void;
 };
 
-export type DialogState<D extends DialogComponents = DialogComponents> = {
-  openDialog: (opts: OpenDialogOptions<D>) => void;
-  closeDialog: (type?: DialogKey<D>) => void;
+export type DialogState = {
+  openDialog: (opts: OpenDialogOptions) => void;
+  closeDialog: (type?: string) => void;
   closeAllDialogs: () => void;
 };
 
 export const DialogContext = createContext<DialogState | undefined>(undefined);
 
-type DialogProviderProps<D extends DialogComponents> = {
+type DialogProviderProps = {
   children: React.ReactNode;
-  dialogs: D;
 };
 
-type DialogContainerProps<D extends DialogComponents> = {
-  dialogs: D;
-  dialogStack: OpenDialogOptions<D>[];
-  closeDialog: (type?: DialogKey<D>) => void;
+type DialogContainerProps = {
+  dialogs: DialogComponents;
+  dialogStack: OpenDialogOptions[];
+  closeDialog: (type?: string) => void;
 };
-
-export const DialogContainer = <D extends DialogComponents>({
+export const DialogContainer = ({
   dialogs,
   dialogStack,
   closeDialog,
-}: DialogContainerProps<D>) => {
+}: DialogContainerProps) => {
   return (
     <>
       {dialogStack.map(({ type, props }, index) => {
@@ -66,18 +58,14 @@ export const DialogContainer = <D extends DialogComponents>({
   );
 };
 
-export const DialogProvider = <D extends DialogComponents>({
-  children,
-  dialogs,
-}: DialogProviderProps<D>) => {
-  const [dialogStack, setDialogStack] = useState<OpenDialogOptions<D>[]>([]);
+export const DialogProvider = ({ children }: DialogProviderProps) => {
+  const [dialogStack, setDialogStack] = useState<OpenDialogOptions[]>([]);
 
-  const openDialog = (opts: OpenDialogOptions<D>) => {
+  const openDialog = (opts: OpenDialogOptions) => {
     setDialogStack((prev) => [...prev, opts]);
   };
 
-  const closeDialog = useCallback(
-    (type?: DialogKey<D>) => {
+  const closeDialog = useCallback((type?: string) => {
     setDialogStack((prev) => {
       if (type) {
         const targetIndex = prev.findIndex((dialog) => dialog.type === type);

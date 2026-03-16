@@ -5,13 +5,13 @@ import { LLMPage } from "./pages/llm/llm-page";
 import { RerankerPage } from "./pages/reranker/reranker-page";
 import { EmbeddingPage } from "./pages/embeddings/embedding-page";
 import { ObservabilityPage } from "./pages/observability/observability-page";
-import { ThemeProvider } from "./components/theme-provider";
+import { RootLayout } from "./components/layout/root";
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<RootLayout />}>
           <Route path="/" element={<Navigate to="/knowledge/base" replace />} />
           <Route path="/knowledge/base" element={<KnowledgeBasePage />} />
           <Route path="/knowledge/source" element={<KnowledgeSourcePage />} />
@@ -19,8 +19,8 @@ export default function App() {
           <Route path="/rerankers" element={<RerankerPage />} />
           <Route path="/embeddings" element={<EmbeddingPage />} />
           <Route path="/observability" element={<ObservabilityPage />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }

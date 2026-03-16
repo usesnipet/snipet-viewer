@@ -3,10 +3,68 @@ import { Button } from "../../../components/button";
 import { Badge } from "../../../components/badge";
 import { Plus, Edit2, Trash2, Layers } from "lucide-react";
 import { formatDate } from "../../../lib/utils";
-import { useGetApiV1Rerankers } from "@/gen";
+import { useDeleteApiV1RerankersId, useGetApiV1RerankersSuspense } from "@/gen";
+import type { GetApiV1Rerankers200 } from "@/gen/types";
+import { DialogType } from "@/dialogs";
+import { useDialog } from "@/hooks/use-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 export function RerankerList() {
-  const { data: rerankers } = useGetApiV1Rerankers();
+  const { data: rerankers, error } = useGetApiV1RerankersSuspense();
+  const { mutate: deleteReranker } = useDeleteApiV1RerankersId();
+  const { openDialog, closeDialog } = useDialog();
+  const { toast } = useToast();
+  console.log(rerankers, error );
+
+  type Reranker = NonNullable<GetApiV1Rerankers200>[number];
+
+  const handleCreate = () => {
+    openDialog({
+      type: DialogType.CREATE_OR_UPDATE_RERANKER,
+      props: { reranker: undefined },
+    });
+  };
+
+  const handleEdit = (reranker: Reranker) => {
+    openDialog({
+      type: DialogType.CREATE_OR_UPDATE_RERANKER,
+      props: { reranker },
+    });
+  };
+
+  const handleDelete = (id: Reranker["id"]) => {
+    openDialog({
+      type: DialogType.CONFIRM,
+      props: {
+        title: "Delete Re-ranker",
+        description: "Are you sure you want to delete this re-ranker?",
+        confirm: {
+          text: "Delete",
+          action: () => {
+            deleteReranker(
+              { id },
+              {
+                onSuccess: () => {
+                  toast({ title: "Re-ranker deleted successfully" });
+                  closeDialog(DialogType.CONFIRM);
+                },
+                onError: () => {
+                  toast({ title: "Failed to delete re-ranker", variant: "destructive" });
+                  closeDialog(DialogType.CONFIRM);
+                },
+              }
+            )
+          },
+        },
+        cancel: {
+          text: "Cancel",
+          action: () => {
+            closeDialog(DialogType.CONFIRM);
+          },
+        },
+      }
+    })
+  };
 
   return (
     <Card>
@@ -14,7 +72,7 @@ export function RerankerList() {
         title="Configured Re-rankers"
         description="Active Re-ranker connections for your search pipelines."
         action={
-          <Button onClick={onCreate} size="sm">
+          <Button onClick={handleCreate} size="sm">
             <Plus className="w-4 h-4 mr-2" />
             Add Re-ranker
           </Button>
@@ -33,14 +91,20 @@ export function RerankerList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {rerankers.length === 0 ? (
+              {error ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-10 text-center text-slate-400 dark:text-slate-600 italic">
+                    Failed to load re-rankers.
+                  </td>
+                </tr>
+              ) : rerankers?.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-10 text-center text-slate-400 dark:text-slate-600 italic">
                     No Re-rankers configured yet.
                   </td>
                 </tr>
               ) : (
-                rerankers.map((reranker) => (
+              rerankers?.map((reranker) => (
                   <tr key={reranker.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -63,10 +127,10 @@ export function RerankerList() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button variant="ghost" size="sm" onClick={() => onEdit(reranker)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleEdit(reranker)}>
                           <Edit2 className="w-3.5 h-3.5" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={() => onDelete(reranker.id)} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20">
+                        <Button variant="ghost" size="sm" onClick={() => handleDelete(reranker.id)} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20">
                           <Trash2 className="w-3.5 h-3.5" />
                         </Button>
                       </div>

@@ -4,17 +4,28 @@ import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', '');
+  // Use __dirname so `pnpm dev` works regardless of the process CWD.
+  // Restrict to Vite-exposed vars to avoid accidentally reading unrelated env.
+  const env = loadEnv(mode, __dirname, 'VITE_');
+  const apiUrl = env.VITE_API_URL?.trim();
+  console.log(apiUrl);
+
   return {
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve(__dirname, 'src'),
       },
     },
-    define: {
-      // Injetado no client axios usado pelos hooks gerados pelo Kubb (AXIOS_BASE)
-      AXIOS_BASE: JSON.stringify(env.VITE_API_URL ?? ''),
-    },
+    server: {
+      proxy: apiUrl
+        ? {
+            '/api': {
+              target: apiUrl,
+              changeOrigin: true,
+            },
+          }
+        : undefined,
+    }
   };
 });
