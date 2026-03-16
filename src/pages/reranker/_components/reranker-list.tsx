@@ -52,13 +52,6 @@ export function RerankerList() {
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
 
-  const handleCreate = useCallback(() => {
-    openDialog({
-      type: DialogType.CREATE_OR_UPDATE_RERANKER,
-      props: { reranker: undefined },
-    });
-  }, [openDialog]);
-
   const handleEdit = useCallback(
     (reranker: Reranker) => {
       openDialog({
@@ -114,13 +107,13 @@ export function RerankerList() {
     () => [
       columnHelper.accessor("name", {
         header: "Name",
-        cell: ({ row }) => (
+        cell: ({ getValue }) => (
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg text-emerald-600 dark:text-emerald-400">
+            <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400">
               <Layers className="w-4 h-4" />
             </div>
             <span className="font-medium text-slate-900 dark:text-slate-100">
-              {row.original.name}
+              {getValue()}
             </span>
           </div>
         ),
