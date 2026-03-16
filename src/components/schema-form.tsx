@@ -1,9 +1,11 @@
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { RJSFSchema, UiSchema, WidgetProps, FieldTemplateProps, ObjectFieldTemplateProps } from "@rjsf/utils";
-import { Input, Select } from "./form-elements";
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { FormItem, FormLabel } from "./ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 // Custom Widgets to match our UI
 const CustomBaseInput = (props: WidgetProps) => {
@@ -12,36 +14,43 @@ const CustomBaseInput = (props: WidgetProps) => {
   const type = schema.type === "integer" || schema.type === "number" ? "number" : "text";
 
   return (
-    <Input
-      id={id}
-      label={label}
-      value={value || ""}
-      type={type}
-      placeholder={placeholder || (schema.description as string)}
-      disabled={disabled || readonly}
-      onChange={(e) => onChange(type === "number" ? Number(e.target.value) : e.target.value)}
-      onBlur={onBlur && ((e) => onBlur(id, e.target.value))}
-      onFocus={onFocus && ((e) => onFocus(id, e.target.value))}
-    />
+    <FormItem>
+      <FormLabel>{label}</FormLabel>
+      <Input
+        id={id}
+        value={value || ""}
+        type={type}
+        placeholder={placeholder || (schema.description as string)}
+        disabled={disabled || readonly}
+        onChange={(e) => onChange(type === "number" ? Number(e.target.value) : e.target.value)}
+        onBlur={onBlur && ((e) => onBlur(id, e.target.value))}
+        onFocus={onFocus && ((e) => onFocus(id, e.target.value))}
+      />
+    </FormItem>
   );
 };
 
 const CustomSelect = (props: WidgetProps) => {
-  const { value, readonly, disabled, onChange, options, label, id } = props;
+  const { value, readonly, disabled, onChange, options, label, id, placeholder, schema } = props;
   const selectOptions = (options.enumOptions || []).map((opt: any) => ({
     label: opt.label,
     value: opt.value,
   }));
 
   return (
-    <Select
-      id={id}
-      label={label}
-      value={value || ""}
-      options={selectOptions}
-      disabled={disabled || readonly}
-      onChange={(e) => onChange(e.target.value)}
-    />
+    <FormItem>
+      <FormLabel>{label}</FormLabel>
+      <Select value={value || ""} onValueChange={onChange}>
+        <SelectTrigger>
+          <SelectValue placeholder={placeholder || (schema.description as string)} />
+        </SelectTrigger>
+        <SelectContent>
+          {selectOptions.map((opt) => (
+            <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </FormItem>
   );
 };
 

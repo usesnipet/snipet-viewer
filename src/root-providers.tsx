@@ -1,4 +1,4 @@
-import { ThemeProvider } from "./components/theme-provider";
+import { ThemeProvider } from "./context/theme-provider";
 
 import { Toaster } from './components/ui/toaster';
 import { DialogProvider } from './context/dialog';

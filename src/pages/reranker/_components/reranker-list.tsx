@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { Plus, Edit2, Trash2, Layers } from "lucide-react";
+import { Edit2, Trash2, Layers } from "lucide-react";
 import { formatDate } from "../../../lib/utils";
 import {
   getApiV1RerankersQueryKey,

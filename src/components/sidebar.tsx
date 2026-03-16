@@ -1,10 +1,10 @@
 import * as React from "react";
-import { 
-  LayoutDashboard, 
-  Database, 
-  Settings, 
-  BarChart3, 
-  ShieldCheck, 
+import {
+  LayoutDashboard,
+  Database,
+  Settings,
+  BarChart3,
+  ShieldCheck,
   Layers,
   ChevronRight,
   Zap,
@@ -15,14 +15,14 @@ import {
 } from "lucide-react";
 import { cn } from "../lib/utils";
 import { Link, useLocation } from "react-router-dom";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "../context/theme-provider";
 import { SystemService } from "../services/system-service";
 
 const NAV_ITEMS = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-  { 
-    icon: Database, 
-    label: "Knowledge", 
+  {
+    icon: Database,
+    label: "Knowledge",
     path: "/knowledge",
     subItems: [
       { label: "Bases", path: "/knowledge/base" },
@@ -48,7 +48,7 @@ export function Sidebar() {
   }, []);
 
   const toggleExpand = (label: string) => {
-    setExpandedItems(prev => 
+    setExpandedItems(prev =>
       prev.includes(label) ? prev.filter(i => i !== label) : [...prev, label]
     );
   };
@@ -66,7 +66,7 @@ export function Sidebar() {
         {NAV_ITEMS.map((item) => {
           const isParentActive = location.pathname.startsWith(item.path);
           const isExpanded = expandedItems.includes(item.label);
-          
+
           if (item.subItems) {
             return (
               <div key={item.label} className="space-y-1">
@@ -74,8 +74,8 @@ export function Sidebar() {
                   onClick={() => toggleExpand(item.label)}
                   className={cn(
                     "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all group",
-                    isParentActive 
-                      ? "text-indigo-700 dark:text-indigo-400" 
+                    isParentActive
+                      ? "text-indigo-700 dark:text-indigo-400"
                       : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-100"
                   )}
                 >
@@ -85,7 +85,7 @@ export function Sidebar() {
                   </div>
                   <ChevronRight className={cn("w-3 h-3 transition-transform duration-200", isExpanded && "rotate-90")} />
                 </button>
-                
+
                 {isExpanded && (
                   <div className="ml-9 space-y-1 animate-in slide-in-from-top-1 duration-200">
                     {item.subItems.map((sub) => {
@@ -118,8 +118,8 @@ export function Sidebar() {
               to={item.path}
               className={cn(
                 "flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all group",
-                isActive 
-                  ? "bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400" 
+                isActive
+                  ? "bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400"
                   : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-100"
               )}
             >
@@ -138,7 +138,7 @@ export function Sidebar() {
           <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 dark:text-slate-600">Version</span>
           <span className="text-xs font-mono text-slate-500 dark:text-slate-500">{version}</span>
         </div>
-        
+
         <button
           onClick={toggleTheme}
           title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
