@@ -1,4 +1,3 @@
-import * as React from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { RJSFSchema, UiSchema, WidgetProps, FieldTemplateProps, ObjectFieldTemplateProps } from "@rjsf/utils";
@@ -9,7 +8,7 @@ import { cn } from "../lib/utils";
 // Custom Widgets to match our UI
 const CustomBaseInput = (props: WidgetProps) => {
   const { value, readonly, disabled, onChange, onBlur, onFocus, options, schema, label, id, placeholder } = props;
-  
+
   const type = schema.type === "integer" || schema.type === "number" ? "number" : "text";
 
   return (
@@ -48,7 +47,7 @@ const CustomSelect = (props: WidgetProps) => {
 
 const CustomFieldTemplate = (props: FieldTemplateProps) => {
   const { id, classNames, label, help, required, description, errors, children, schema } = props;
-  
+
   // If it's an object, we don't want the extra wrapper
   if (schema.type === "object") {
     return <div className={classNames}>{children}</div>;
@@ -58,8 +57,7 @@ const CustomFieldTemplate = (props: FieldTemplateProps) => {
     <div className={cn("space-y-1.5 mb-4", classNames)}>
       {children}
       {description && <div className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">{description}</div>}
-      {errors}
-      {help}
+      {errors && <div className="text-xs text-red-500 font-medium">{errors}</div>}
     </div>
   );
 };
@@ -117,7 +115,7 @@ export function SchemaForm({ schema, uiSchema, formData, onSubmit, submitLabel =
         showErrorList={false}
       >
         <div className="mt-8 flex justify-end gap-3">
-          <Button type="submit" loading={loading}>
+          <Button type="submit" disabled={loading}>
             {submitLabel}
           </Button>
         </div>

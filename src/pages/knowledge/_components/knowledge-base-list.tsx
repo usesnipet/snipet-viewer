@@ -1,8 +1,8 @@
-import { KnowledgeBase } from "../../../types/knowledge";
 import { Card, CardHeader, CardContent } from "../../../components/card";
 import { Button } from "../../../components/button";
 import { Plus, Edit2, Trash2, Database } from "lucide-react";
-import { formatDate } from "../../../lib/utils";
+import { KnowledgeBase } from "@/types";
+import { formatDate } from "@/lib/utils";
 
 interface KnowledgeBaseListProps {
   bases: KnowledgeBase[];
@@ -14,8 +14,8 @@ interface KnowledgeBaseListProps {
 export function KnowledgeBaseList({ bases, onCreate, onEdit, onDelete }: KnowledgeBaseListProps) {
   return (
     <Card>
-      <CardHeader 
-        title="Knowledge Bases" 
+      <CardHeader
+        title="Knowledge Bases"
         description="Logical groupings of data sources for specific AI contexts."
         action={
           <Button onClick={onCreate} size="sm">

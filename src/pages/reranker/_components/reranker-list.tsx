@@ -4,19 +4,16 @@ import { Badge } from "../../../components/badge";
 import { Plus, Edit2, Trash2, Layers } from "lucide-react";
 import { formatDate } from "../../../lib/utils";
 import { useDeleteApiV1RerankersId, useGetApiV1RerankersSuspense } from "@/gen";
-import type { GetApiV1Rerankers200 } from "@/gen/types";
 import { DialogType } from "@/dialogs";
 import { useDialog } from "@/hooks/use-dialog";
 import { useToast } from "@/hooks/use-toast";
+import { Reranker } from "@/types";
 
 export function RerankerList() {
   const { data: rerankers, error } = useGetApiV1RerankersSuspense();
   const { mutate: deleteReranker } = useDeleteApiV1RerankersId();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
-  console.log(rerankers, error );
-
-  type Reranker = NonNullable<GetApiV1Rerankers200>[number];
 
   const handleCreate = () => {
     openDialog({

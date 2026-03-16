@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { RerankerConfig } from "../../../types/reranker";
 import { Input, Select } from "../../../components/form-elements";
-import { RerankerService } from "../../../services/reranker-service";
 import { SchemaForm } from "../../../components/schema-form";
 
 interface RerankerFormProps {
-  initialData: RerankerConfig | null;
+  initialData: any | null;
   onSuccess: () => void;
 }
 
