@@ -31,10 +31,10 @@ export { postApiV1KnowledgeBases } from "./knowledgeBasesController/postApiV1Kno
 export { postApiV1KnowledgeBasesIdSourcesSourceid } from "./knowledgeBasesController/postApiV1KnowledgeBasesIdSourcesSourceid.ts";
 export { deleteApiV1KnowledgeSourcesId } from "./knowledgeSourcesController/deleteApiV1KnowledgeSourcesId.ts";
 export { getApiV1KnowledgeSources } from "./knowledgeSourcesController/getApiV1KnowledgeSources.ts";
-export { getApiV1KnowledgeSourcesAvailable } from "./knowledgeSourcesController/getApiV1KnowledgeSourcesAvailable.ts";
 export { getApiV1KnowledgeSourcesId } from "./knowledgeSourcesController/getApiV1KnowledgeSourcesId.ts";
 export { getApiV1KnowledgeSourcesIdSync } from "./knowledgeSourcesController/getApiV1KnowledgeSourcesIdSync.ts";
 export { getApiV1KnowledgeSourcesIdWithVersions } from "./knowledgeSourcesController/getApiV1KnowledgeSourcesIdWithVersions.ts";
+export { getApiV1KnowledgeSourcesSchema } from "./knowledgeSourcesController/getApiV1KnowledgeSourcesSchema.ts";
 export { getApiV1KnowledgeSourcesWithVersions } from "./knowledgeSourcesController/getApiV1KnowledgeSourcesWithVersions.ts";
 export { patchApiV1KnowledgeSourcesId } from "./knowledgeSourcesController/patchApiV1KnowledgeSourcesId.ts";
 export { patchApiV1KnowledgeSourcesIdSync } from "./knowledgeSourcesController/patchApiV1KnowledgeSourcesIdSync.ts";

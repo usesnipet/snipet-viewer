@@ -1,97 +1,170 @@
-import { KnowledgeSource } from "../../../types/knowledge";
-import { Card, CardHeader, CardContent } from "../../../components/card";
-import { Button } from "../../../components/button";
-import { Badge } from "../../../components/badge";
-import { Plus, Edit2, Archive, ExternalLink } from "lucide-react";
-import { formatDate, cn } from "../../../lib/utils";
+import { createColumnHelper } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import { Edit2, Trash2, Database } from "lucide-react";
+import { formatDate } from "@/lib/utils";
+import {
+  getApiV1KnowledgeSourcesQueryKey,
+  useDeleteApiV1KnowledgeSourcesId,
+  useGetApiV1KnowledgeSourcesSuspense,
+} from "@/gen";
+import { DialogType } from "@/dialogs";
+import { useDialog } from "@/hooks/use-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { DataTable } from "@/components/data-table";
+import { useCallback, useMemo } from "react";
+import type { KnowledgeSource } from "@/types";
 
-interface KnowledgeSourceListProps {
-  sources: KnowledgeSource[];
-  onCreate: () => void;
-  onEdit: (source: KnowledgeSource) => void;
+const columnHelper = createColumnHelper<KnowledgeSource>();
+
+function KnowledgeSourceRowActions({
+  source,
+  onEdit,
+  onDelete,
+}: {
+  source: KnowledgeSource;
+  onEdit: (s: KnowledgeSource) => void;
+  onDelete: (id: string) => void;
+}) {
+  return (
+    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <Button variant="ghost" size="sm" onClick={() => onEdit(source)}>
+        <Edit2 className="w-3.5 h-3.5" />
+      </Button>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => onDelete(source.id)}
+        className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+      >
+        <Trash2 className="w-3.5 h-3.5" />
+      </Button>
+    </div>
+  );
 }
 
-export function KnowledgeSourceList({ sources, onCreate, onEdit }: KnowledgeSourceListProps) {
+export function KnowledgeSourceList() {
+  const { invalidateQueries } = useQueryClient();
+  const { data: rawSources, error } = useGetApiV1KnowledgeSourcesSuspense();
+  const sources = (rawSources as unknown as KnowledgeSource[]) ?? [];
+  const { mutate: deleteSource } = useDeleteApiV1KnowledgeSourcesId();
+  const { openDialog, closeDialog } = useDialog();
+  const { toast } = useToast();
+
+  const handleEdit = useCallback(
+    (source: KnowledgeSource) => {
+      openDialog({
+        type: DialogType.CREATE_OR_UPDATE_KNOWLEDGE_SOURCE,
+        props: { source },
+      });
+    },
+    [openDialog]
+  );
+
+  const handleDelete = useCallback(
+    (id: string) => {
+      openDialog({
+        type: DialogType.CONFIRM,
+        props: {
+          title: "Delete Knowledge Source",
+          description: "Are you sure you want to delete this knowledge source?",
+          confirm: {
+            text: "Delete",
+            action: () => {
+              deleteSource(
+                { id },
+                {
+                  onSuccess: () => {
+                    toast({ title: "Knowledge Source deleted successfully" });
+                    invalidateQueries({
+                      queryKey: getApiV1KnowledgeSourcesQueryKey(),
+                    });
+                    closeDialog(DialogType.CONFIRM);
+                  },
+                  onError: () => {
+                    toast({
+                      title: "Failed to delete Knowledge Source",
+                      variant: "destructive",
+                    });
+                    closeDialog(DialogType.CONFIRM);
+                  },
+                }
+              );
+            },
+          },
+          cancel: {
+            text: "Cancel",
+            action: () => closeDialog(DialogType.CONFIRM),
+          },
+        },
+      });
+    },
+    [openDialog, closeDialog, deleteSource, invalidateQueries, toast]
+  );
+
+  const columns = useMemo<ColumnDef<KnowledgeSource, unknown>[]>(
+    () => [
+      columnHelper.accessor("name", {
+        header: "Name",
+        cell: ({ getValue }) => (
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400">
+              <Database className="w-4 h-4" />
+            </div>
+            <span className="font-medium text-slate-900 dark:text-slate-100">
+              {getValue()}
+            </span>
+          </div>
+        ),
+      }),
+      columnHelper.accessor("type", {
+        header: "Type",
+        cell: ({ getValue }) => (
+          <Badge variant="secondary">{getValue()}</Badge>
+        ),
+      }),
+      columnHelper.accessor("status", {
+        header: "Status",
+        cell: ({ getValue }) => (
+          <Badge variant={getValue() === "ACTIVE" ? "default" : "outline"}>
+            {getValue()}
+          </Badge>
+        ),
+      }),
+      columnHelper.accessor("updatedAt", {
+        header: "Updated At",
+        cell: ({ getValue }) => (
+          <span className="text-sm text-slate-500 dark:text-slate-400">
+            {formatDate(getValue())}
+          </span>
+        ),
+      }),
+      columnHelper.display({
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => (
+          <KnowledgeSourceRowActions
+            source={row.original}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        ),
+      }),
+    ],
+    [handleEdit, handleDelete]
+  );
+
   return (
-    <Card>
-      <CardHeader 
-        title="Knowledge Sources" 
-        description="Raw data origins like S3, APIs, or Databases."
-        action={
-          <Button onClick={onCreate} size="sm">
-            <Plus className="w-4 h-4 mr-2" />
-            Create Source
-          </Button>
-        }
-      />
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800">
-                <th className="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Methods</th>
-                <th className="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Updated At</th>
-                <th className="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {sources.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-slate-400 dark:text-slate-600 italic">
-                    No knowledge sources found.
-                  </td>
-                </tr>
-              ) : (
-                sources.map((source) => (
-                  <tr 
-                    key={source.id} 
-                    className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors group"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-slate-900 dark:text-slate-100">{source.name}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <Badge variant="info">{source.type}</Badge>
-                    </td>
-                    <td className="px-6 py-4">
-                      <Badge variant={source.status === "ACTIVE" ? "success" : "neutral"}>
-                        {source.status}
-                      </Badge>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-1">
-                        {source.methods.map(m => (
-                          <span key={m} className="text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono font-bold text-slate-600 dark:text-slate-400">
-                            {m}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
-                      {formatDate(source.updatedAt)}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button variant="ghost" size="sm" onClick={() => onEdit(source)}>
-                          <Edit2 className="w-3.5 h-3.5" />
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <Archive className="w-3.5 h-3.5" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
+    <DataTable<KnowledgeSource>
+      columns={columns}
+      data={sources}
+      getRowId={(r) => r.id}
+      error={!!error}
+      errorMessage="Failed to load knowledge sources."
+      emptyMessage="No knowledge sources configured yet."
+      actionsColumnId="actions"
+    />
   );
 }
