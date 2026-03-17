@@ -46,7 +46,7 @@ function RerankerRowActions({
 }
 
 export function RerankerList() {
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
   const { data: rerankers, error } = useGetApiV1RerankersSuspense();
   const { mutate: deleteReranker } = useDeleteApiV1RerankersId();
   const { openDialog, closeDialog } = useDialog();
@@ -77,7 +77,7 @@ export function RerankerList() {
               {
                 onSuccess: () => {
                   toast({ title: "Re-ranker deleted successfully" });
-                  invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+                  queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
                   closeDialog(DialogType.CONFIRM);
                 },
                 onError: () => {
@@ -100,7 +100,7 @@ export function RerankerList() {
       },
     });
     },
-    [openDialog, closeDialog, deleteReranker, invalidateQueries, toast]
+    [openDialog, closeDialog, deleteReranker, queryClient, toast]
   );
 
   const columns = useMemo<ColumnDef<Reranker, unknown>[]>(

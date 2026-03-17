@@ -47,7 +47,7 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
     },
   });
 
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { data: schemas = [] } = useGetApiV1LlmsSchema();
   const { mutate: createLLM } = usePostApiV1Llms();
@@ -76,7 +76,7 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
         {
           onSuccess: () => {
             toast({ title: "LLM updated successfully" });
-            invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_LLM);
           },
           onError: () => {
@@ -97,7 +97,7 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
         {
           onSuccess: () => {
             toast({ title: "LLM created successfully" });
-            invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_LLM);
           },
           onError: () => {

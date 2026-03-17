@@ -37,7 +37,7 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
     },
   });
 
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { data: schemas = [] } = useGetApiV1RerankersSchema();
 
@@ -59,7 +59,7 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
       updateReranker({ id: reranker?.id, data: finalData }, {
         onSuccess: () => {
           toast({ title: "Re-ranker updated successfully" });
-          invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
           closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
         },
         onError: () => {
@@ -70,7 +70,7 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
       createReranker({ data: finalData }, {
         onSuccess: () => {
           toast({ title: "Re-ranker created successfully" });
-          invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
           closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
         },
         onError: () => {

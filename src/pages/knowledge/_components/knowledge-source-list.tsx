@@ -46,7 +46,7 @@ function KnowledgeSourceRowActions({
 }
 
 export function KnowledgeSourceList() {
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
   const { data: rawSources, error } = useGetApiV1KnowledgeSourcesSuspense();
   const sources = (rawSources as unknown as KnowledgeSource[]) ?? [];
   const { mutate: deleteSource } = useDeleteApiV1KnowledgeSourcesId();
@@ -78,7 +78,7 @@ export function KnowledgeSourceList() {
                 {
                   onSuccess: () => {
                     toast({ title: "Knowledge Source deleted successfully" });
-                    invalidateQueries({
+                    queryClient.invalidateQueries({
                       queryKey: getApiV1KnowledgeSourcesQueryKey(),
                     });
                     closeDialog(DialogType.CONFIRM);
@@ -101,7 +101,7 @@ export function KnowledgeSourceList() {
         },
       });
     },
-    [openDialog, closeDialog, deleteSource, invalidateQueries, toast]
+    [openDialog, closeDialog, deleteSource, queryClient, toast]
   );
 
   const columns = useMemo<ColumnDef<KnowledgeSource, unknown>[]>(

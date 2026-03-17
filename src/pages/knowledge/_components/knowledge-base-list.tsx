@@ -45,7 +45,7 @@ function KnowledgeBaseRowActions({
 }
 
 export function KnowledgeBaseList() {
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
   const { data: bases, error } = useGetApiV1KnowledgeBasesSuspense();
   const { mutate: deleteBase } = useDeleteApiV1KnowledgeBasesId();
   const { openDialog, closeDialog } = useDialog();
@@ -76,7 +76,7 @@ export function KnowledgeBaseList() {
                 {
                   onSuccess: () => {
                     toast({ title: "Knowledge Base deleted successfully" });
-                    invalidateQueries({
+                    queryClient.invalidateQueries({
                       queryKey: getApiV1KnowledgeBasesQueryKey(),
                     });
                     closeDialog(DialogType.CONFIRM);
@@ -99,7 +99,7 @@ export function KnowledgeBaseList() {
         },
       });
     },
-    [openDialog, closeDialog, deleteBase, invalidateQueries, toast]
+    [openDialog, closeDialog, deleteBase, queryClient, toast]
   );
 
   const columns = useMemo<ColumnDef<KnowledgeBase, unknown>[]>(

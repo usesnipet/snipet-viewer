@@ -37,7 +37,7 @@ export const CreateOrUpdateKnowledgeBaseDialog = ({
 }: CreateOrUpdateKnowledgeBaseDialogProps) => {
   const { toast } = useToast();
   const { closeDialog } = useDialog();
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   const isEditing = !!base;
 
@@ -64,7 +64,7 @@ export const CreateOrUpdateKnowledgeBaseDialog = ({
         {
           onSuccess: () => {
             toast({ title: "Knowledge Base updated successfully" });
-            invalidateQueries({ queryKey: getApiV1KnowledgeBasesQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeBasesQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_BASE);
           },
           onError: () => {
@@ -83,7 +83,7 @@ export const CreateOrUpdateKnowledgeBaseDialog = ({
       {
         onSuccess: () => {
           toast({ title: "Knowledge Base created successfully" });
-          invalidateQueries({ queryKey: getApiV1KnowledgeBasesQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeBasesQueryKey() });
           closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_BASE);
         },
         onError: () => {

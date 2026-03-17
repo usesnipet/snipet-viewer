@@ -48,7 +48,7 @@ function EmbeddingProfileRowActions({
 }
 
 export function EmbeddingProfileList() {
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
 
@@ -97,7 +97,7 @@ export function EmbeddingProfileList() {
                 {
                   onSuccess: () => {
                     toast({ title: "Embedding profile deleted successfully" });
-                    invalidateQueries({
+                    queryClient.invalidateQueries({
                       queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey(),
                     });
                     closeDialog(DialogType.CONFIRM);
@@ -120,7 +120,7 @@ export function EmbeddingProfileList() {
         },
       });
     },
-    [openDialog, closeDialog, deleteEmbeddingProfile, invalidateQueries, toast]
+    [openDialog, closeDialog, deleteEmbeddingProfile, queryClient, toast]
   );
 
   const columns = useMemo<ColumnDef<EmbeddingProfile, unknown>[]>(

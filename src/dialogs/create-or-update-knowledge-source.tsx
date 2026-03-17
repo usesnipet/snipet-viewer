@@ -45,7 +45,7 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
 }: CreateOrUpdateKnowledgeSourceDialogProps) => {
   const { toast } = useToast();
   const { closeDialog } = useDialog();
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   const isEditing = !!source;
 
@@ -92,7 +92,7 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
         {
           onSuccess: () => {
             toast({ title: "Knowledge Source updated successfully" });
-            invalidateQueries({ queryKey: getApiV1KnowledgeSourcesQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeSourcesQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_SOURCE);
           },
           onError: () => {
@@ -128,7 +128,7 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
       {
         onSuccess: () => {
           toast({ title: "Knowledge Source created successfully" });
-          invalidateQueries({ queryKey: getApiV1KnowledgeSourcesQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeSourcesQueryKey() });
           closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_SOURCE);
         },
         onError: () => {

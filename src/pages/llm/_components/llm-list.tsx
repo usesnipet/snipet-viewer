@@ -46,7 +46,7 @@ function LLMRowActions({
 }
 
 export function LLMList() {
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
   const { data: llms, error } = useGetApiV1LlmsSuspense();
   const { mutate: deleteLLM } = useDeleteApiV1LlmsId();
   const { openDialog, closeDialog } = useDialog();
@@ -84,7 +84,7 @@ export function LLMList() {
                 {
                   onSuccess: () => {
                     toast({ title: "LLM deleted successfully" });
-                    invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
+                    queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
                     closeDialog(DialogType.CONFIRM);
                   },
                   onError: () => {
@@ -105,7 +105,7 @@ export function LLMList() {
         },
       });
     },
-    [openDialog, closeDialog, deleteLLM, invalidateQueries, toast]
+    [openDialog, closeDialog, deleteLLM, queryClient, toast]
   );
 
   const columns = useMemo<ColumnDef<LLM, unknown>[]>(

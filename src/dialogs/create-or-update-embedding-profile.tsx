@@ -52,7 +52,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
 }: CreateOrUpdateEmbeddingProfileDialogProps) => {
   const { toast } = useToast();
   const { closeDialog } = useDialog();
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   const isEditing = embeddingProfile != null;
 
@@ -119,7 +119,9 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
         {
           onSuccess: () => {
             toast({ title: "Embedding profile updated successfully" });
-            invalidateQueries({ queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey() });
+            queryClient.invalidateQueries({
+              queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey(),
+            });
             closeDialog(DialogType.CREATE_OR_UPDATE_EMBEDDING_PROFILE);
           },
           onError: () => {
@@ -135,7 +137,9 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
       {
         onSuccess: () => {
           toast({ title: "Embedding profile created successfully" });
-          invalidateQueries({ queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey() });
+          queryClient.invalidateQueries({
+            queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey(),
+          });
           closeDialog(DialogType.CREATE_OR_UPDATE_EMBEDDING_PROFILE);
         },
         onError: () => {
