@@ -1,11 +1,12 @@
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import { RJSFSchema, UiSchema, WidgetProps, FieldTemplateProps, ObjectFieldTemplateProps } from "@rjsf/utils";
+import { RJSFSchema, UiSchema, WidgetProps, FieldTemplateProps, ObjectFieldTemplateProps, RegistryWidgetsType } from "@rjsf/utils";
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { FormItem, FormLabel } from "./ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Checkbox } from "./ui/checkbox";
 
 // Custom Widgets to match our UI
 const CustomBaseInput = (props: WidgetProps) => {
@@ -30,6 +31,24 @@ const CustomBaseInput = (props: WidgetProps) => {
   );
 };
 
+
+const CustomCheckbox = (props: WidgetProps) => {
+  const { value, readonly, disabled, onChange, onBlur, onFocus, options, schema, label, id, placeholder } = props;
+
+  return (
+    <FormItem className="flex items-center gap-2">
+      <Checkbox
+        checked={value}
+        disabled={disabled || readonly}
+        onChange={onChange}
+        onBlur={onBlur && ((e) => onBlur(id, e.target.value))}
+        onFocus={onFocus && ((e) => onFocus(id, e.target.value))}
+        id={id}
+      />
+      <FormLabel htmlFor={id}>{label}</FormLabel>
+    </FormItem>
+  );
+};
 const CustomSelect = (props: WidgetProps) => {
   const { value, readonly, disabled, onChange, options, label, id, placeholder, schema } = props;
   const selectOptions = (options.enumOptions || []).map((opt: any) => ({
@@ -101,9 +120,10 @@ interface SchemaFormProps {
 }
 
 export function SchemaForm({ schema, uiSchema, formData, onSubmit, submitLabel = "Submit", loading }: SchemaFormProps) {
-  const widgets = {
+  const widgets: RegistryWidgetsType<any, RJSFSchema, any> = {
     TextWidget: CustomBaseInput,
     SelectWidget: CustomSelect,
+    CheckboxWidget: CustomCheckbox,
   };
 
   const templates = {
