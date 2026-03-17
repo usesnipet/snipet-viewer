@@ -28,8 +28,8 @@ export type { GetApiV1EmbeddingProfilesIdSuspenseQueryKey } from "./embeddingPro
 export type { GetApiV1EmbeddingProfilesSuspenseQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSuspense.ts";
 export type { PatchApiV1EmbeddingProfilesIdMutationKey } from "./embeddingProfilesController/usePatchApiV1EmbeddingProfilesId.ts";
 export type { PostApiV1EmbeddingProfilesMutationKey } from "./embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
-export type { GetHealthQueryKey } from "./healthController/useGetHealth.ts";
-export type { GetHealthSuspenseQueryKey } from "./healthController/useGetHealthSuspense.ts";
+export type { GetApiHealthQueryKey } from "./healthController/useGetApiHealth.ts";
+export type { GetApiHealthSuspenseQueryKey } from "./healthController/useGetApiHealthSuspense.ts";
 export type { DeleteApiV1KnowledgeBasesIdMutationKey } from "./knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
 export type { DeleteApiV1KnowledgeBasesIdSourcesSourceidMutationKey } from "./knowledgeBasesController/useDeleteApiV1KnowledgeBasesIdSourcesSourceid.ts";
 export type { GetApiV1KnowledgeBasesQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBases.ts";
@@ -69,6 +69,8 @@ export type { GetApiV1RerankersSchemaSuspenseQueryKey } from "./rerankersControl
 export type { GetApiV1RerankersSuspenseQueryKey } from "./rerankersController/useGetApiV1RerankersSuspense.ts";
 export type { PatchApiV1RerankersIdMutationKey } from "./rerankersController/usePatchApiV1RerankersId.ts";
 export type { PostApiV1RerankersMutationKey } from "./rerankersController/usePostApiV1Rerankers.ts";
+export type { GetApiVersionQueryKey } from "./systemController/useGetApiVersion.ts";
+export type { GetApiVersionSuspenseQueryKey } from "./systemController/useGetApiVersionSuspense.ts";
 export { deleteApiV1LlmCallsIdMutationKey } from "./LLMCallsController/useDeleteApiV1LlmCallsId.ts";
 export { deleteApiV1LlmCallsIdMutationOptions } from "./LLMCallsController/useDeleteApiV1LlmCallsId.ts";
 export { useDeleteApiV1LlmCallsId } from "./LLMCallsController/useDeleteApiV1LlmCallsId.ts";
@@ -159,12 +161,12 @@ export { usePatchApiV1EmbeddingProfilesId } from "./embeddingProfilesController/
 export { postApiV1EmbeddingProfilesMutationKey } from "./embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
 export { postApiV1EmbeddingProfilesMutationOptions } from "./embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
 export { usePostApiV1EmbeddingProfiles } from "./embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
-export { getHealthQueryKey } from "./healthController/useGetHealth.ts";
-export { getHealthQueryOptions } from "./healthController/useGetHealth.ts";
-export { useGetHealth } from "./healthController/useGetHealth.ts";
-export { getHealthSuspenseQueryKey } from "./healthController/useGetHealthSuspense.ts";
-export { getHealthSuspenseQueryOptions } from "./healthController/useGetHealthSuspense.ts";
-export { useGetHealthSuspense } from "./healthController/useGetHealthSuspense.ts";
+export { getApiHealthQueryKey } from "./healthController/useGetApiHealth.ts";
+export { getApiHealthQueryOptions } from "./healthController/useGetApiHealth.ts";
+export { useGetApiHealth } from "./healthController/useGetApiHealth.ts";
+export { getApiHealthSuspenseQueryKey } from "./healthController/useGetApiHealthSuspense.ts";
+export { getApiHealthSuspenseQueryOptions } from "./healthController/useGetApiHealthSuspense.ts";
+export { useGetApiHealthSuspense } from "./healthController/useGetApiHealthSuspense.ts";
 export { deleteApiV1KnowledgeBasesIdMutationKey } from "./knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
 export { deleteApiV1KnowledgeBasesIdMutationOptions } from "./knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
 export { useDeleteApiV1KnowledgeBasesId } from "./knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
@@ -282,3 +284,9 @@ export { usePatchApiV1RerankersId } from "./rerankersController/usePatchApiV1Rer
 export { postApiV1RerankersMutationKey } from "./rerankersController/usePostApiV1Rerankers.ts";
 export { postApiV1RerankersMutationOptions } from "./rerankersController/usePostApiV1Rerankers.ts";
 export { usePostApiV1Rerankers } from "./rerankersController/usePostApiV1Rerankers.ts";
+export { getApiVersionQueryKey } from "./systemController/useGetApiVersion.ts";
+export { getApiVersionQueryOptions } from "./systemController/useGetApiVersion.ts";
+export { useGetApiVersion } from "./systemController/useGetApiVersion.ts";
+export { getApiVersionSuspenseQueryKey } from "./systemController/useGetApiVersionSuspense.ts";
+export { getApiVersionSuspenseQueryOptions } from "./systemController/useGetApiVersionSuspense.ts";
+export { useGetApiVersionSuspense } from "./systemController/useGetApiVersionSuspense.ts";

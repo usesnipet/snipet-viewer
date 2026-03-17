@@ -28,8 +28,8 @@ export type { GetApiV1EmbeddingProfilesIdSuspenseQueryKey } from "./hooks/embedd
 export type { GetApiV1EmbeddingProfilesSuspenseQueryKey } from "./hooks/embeddingProfilesController/useGetApiV1EmbeddingProfilesSuspense.ts";
 export type { PatchApiV1EmbeddingProfilesIdMutationKey } from "./hooks/embeddingProfilesController/usePatchApiV1EmbeddingProfilesId.ts";
 export type { PostApiV1EmbeddingProfilesMutationKey } from "./hooks/embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
-export type { GetHealthQueryKey } from "./hooks/healthController/useGetHealth.ts";
-export type { GetHealthSuspenseQueryKey } from "./hooks/healthController/useGetHealthSuspense.ts";
+export type { GetApiHealthQueryKey } from "./hooks/healthController/useGetApiHealth.ts";
+export type { GetApiHealthSuspenseQueryKey } from "./hooks/healthController/useGetApiHealthSuspense.ts";
 export type { DeleteApiV1KnowledgeBasesIdMutationKey } from "./hooks/knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
 export type { DeleteApiV1KnowledgeBasesIdSourcesSourceidMutationKey } from "./hooks/knowledgeBasesController/useDeleteApiV1KnowledgeBasesIdSourcesSourceid.ts";
 export type { GetApiV1KnowledgeBasesQueryKey } from "./hooks/knowledgeBasesController/useGetApiV1KnowledgeBases.ts";
@@ -69,6 +69,8 @@ export type { GetApiV1RerankersSchemaSuspenseQueryKey } from "./hooks/rerankersC
 export type { GetApiV1RerankersSuspenseQueryKey } from "./hooks/rerankersController/useGetApiV1RerankersSuspense.ts";
 export type { PatchApiV1RerankersIdMutationKey } from "./hooks/rerankersController/usePatchApiV1RerankersId.ts";
 export type { PostApiV1RerankersMutationKey } from "./hooks/rerankersController/usePostApiV1Rerankers.ts";
+export type { GetApiVersionQueryKey } from "./hooks/systemController/useGetApiVersion.ts";
+export type { GetApiVersionSuspenseQueryKey } from "./hooks/systemController/useGetApiVersionSuspense.ts";
 export type { DeleteApiV1EmbeddingProcessesId200, DeleteApiV1EmbeddingProcessesId404, DeleteApiV1EmbeddingProcessesId500, DeleteApiV1EmbeddingProcessesIdMutation, DeleteApiV1EmbeddingProcessesIdMutationResponse, DeleteApiV1EmbeddingProcessesIdPathParams } from "./types/DeleteApiV1EmbeddingProcessesId.ts";
 export type { DeleteApiV1EmbeddingProfilesId200, DeleteApiV1EmbeddingProfilesId200StatusEnumKey, DeleteApiV1EmbeddingProfilesId404, DeleteApiV1EmbeddingProfilesId500, DeleteApiV1EmbeddingProfilesIdMutation, DeleteApiV1EmbeddingProfilesIdMutationResponse, DeleteApiV1EmbeddingProfilesIdPathParams } from "./types/DeleteApiV1EmbeddingProfilesId.ts";
 export type { DeleteApiV1KnowledgeBasesId200, DeleteApiV1KnowledgeBasesId404, DeleteApiV1KnowledgeBasesId500, DeleteApiV1KnowledgeBasesIdMutation, DeleteApiV1KnowledgeBasesIdMutationResponse, DeleteApiV1KnowledgeBasesIdPathParams } from "./types/DeleteApiV1KnowledgeBasesId.ts";
@@ -77,6 +79,7 @@ export type { DeleteApiV1KnowledgeSourcesId200, DeleteApiV1KnowledgeSourcesId200
 export type { DeleteApiV1LlmCallsId200, DeleteApiV1LlmCallsId404, DeleteApiV1LlmCallsId500, DeleteApiV1LlmCallsIdMutation, DeleteApiV1LlmCallsIdMutationResponse, DeleteApiV1LlmCallsIdPathParams } from "./types/DeleteApiV1LlmCallsId.ts";
 export type { DeleteApiV1LlmsId200, DeleteApiV1LlmsId404, DeleteApiV1LlmsId500, DeleteApiV1LlmsIdMutation, DeleteApiV1LlmsIdMutationResponse, DeleteApiV1LlmsIdPathParams } from "./types/DeleteApiV1LlmsId.ts";
 export type { DeleteApiV1RerankersId200, DeleteApiV1RerankersId404, DeleteApiV1RerankersId500, DeleteApiV1RerankersIdMutation, DeleteApiV1RerankersIdMutationResponse, DeleteApiV1RerankersIdPathParams } from "./types/DeleteApiV1RerankersId.ts";
+export type { GetApiHealth200, GetApiHealthQuery, GetApiHealthQueryResponse } from "./types/GetApiHealth.ts";
 export type { GetApiV1EmbeddingProcesses200, GetApiV1EmbeddingProcesses500, GetApiV1EmbeddingProcessesQuery, GetApiV1EmbeddingProcessesQueryParams, GetApiV1EmbeddingProcessesQueryResponse } from "./types/GetApiV1EmbeddingProcesses.ts";
 export type { GetApiV1EmbeddingProcessesId200, GetApiV1EmbeddingProcessesId404, GetApiV1EmbeddingProcessesId500, GetApiV1EmbeddingProcessesIdPathParams, GetApiV1EmbeddingProcessesIdQuery, GetApiV1EmbeddingProcessesIdQueryResponse } from "./types/GetApiV1EmbeddingProcessesId.ts";
 export type { GetApiV1EmbeddingProfiles200, GetApiV1EmbeddingProfiles200StatusEnumKey, GetApiV1EmbeddingProfiles500, GetApiV1EmbeddingProfilesQuery, GetApiV1EmbeddingProfilesQueryParams, GetApiV1EmbeddingProfilesQueryParamsStatusEnumKey, GetApiV1EmbeddingProfilesQueryResponse } from "./types/GetApiV1EmbeddingProfiles.ts";
@@ -99,7 +102,7 @@ export type { GetApiV1LlmsSchema200, GetApiV1LlmsSchema500, GetApiV1LlmsSchemaQu
 export type { GetApiV1Rerankers200, GetApiV1Rerankers500, GetApiV1RerankersQuery, GetApiV1RerankersQueryParams, GetApiV1RerankersQueryResponse } from "./types/GetApiV1Rerankers.ts";
 export type { GetApiV1RerankersId200, GetApiV1RerankersId404, GetApiV1RerankersId500, GetApiV1RerankersIdPathParams, GetApiV1RerankersIdQuery, GetApiV1RerankersIdQueryResponse } from "./types/GetApiV1RerankersId.ts";
 export type { GetApiV1RerankersSchema200, GetApiV1RerankersSchema500, GetApiV1RerankersSchemaQuery, GetApiV1RerankersSchemaQueryParams, GetApiV1RerankersSchemaQueryResponse } from "./types/GetApiV1RerankersSchema.ts";
-export type { GetHealth200, GetHealthQuery, GetHealthQueryResponse } from "./types/GetHealth.ts";
+export type { GetApiVersion200, GetApiVersionQuery, GetApiVersionQueryResponse } from "./types/GetApiVersion.ts";
 export type { PatchApiV1EmbeddingProcessesId200, PatchApiV1EmbeddingProcessesId404, PatchApiV1EmbeddingProcessesId500, PatchApiV1EmbeddingProcessesIdMutation, PatchApiV1EmbeddingProcessesIdMutationRequest, PatchApiV1EmbeddingProcessesIdMutationResponse, PatchApiV1EmbeddingProcessesIdPathParams } from "./types/PatchApiV1EmbeddingProcessesId.ts";
 export type { PatchApiV1EmbeddingProfilesId200, PatchApiV1EmbeddingProfilesId200StatusEnumKey, PatchApiV1EmbeddingProfilesId404, PatchApiV1EmbeddingProfilesId500, PatchApiV1EmbeddingProfilesIdMutation, PatchApiV1EmbeddingProfilesIdMutationRequest, PatchApiV1EmbeddingProfilesIdMutationRequestStatusEnumKey, PatchApiV1EmbeddingProfilesIdMutationResponse, PatchApiV1EmbeddingProfilesIdPathParams } from "./types/PatchApiV1EmbeddingProfilesId.ts";
 export type { PatchApiV1KnowledgeBasesId200, PatchApiV1KnowledgeBasesId404, PatchApiV1KnowledgeBasesId409, PatchApiV1KnowledgeBasesId500, PatchApiV1KnowledgeBasesIdMutation, PatchApiV1KnowledgeBasesIdMutationRequest, PatchApiV1KnowledgeBasesIdMutationResponse, PatchApiV1KnowledgeBasesIdPathParams } from "./types/PatchApiV1KnowledgeBasesId.ts";
@@ -138,7 +141,7 @@ export { getApiV1EmbeddingProfiles } from "./client/embeddingProfilesController/
 export { getApiV1EmbeddingProfilesId } from "./client/embeddingProfilesController/getApiV1EmbeddingProfilesId.ts";
 export { patchApiV1EmbeddingProfilesId } from "./client/embeddingProfilesController/patchApiV1EmbeddingProfilesId.ts";
 export { postApiV1EmbeddingProfiles } from "./client/embeddingProfilesController/postApiV1EmbeddingProfiles.ts";
-export { getHealth } from "./client/healthController/getHealth.ts";
+export { getApiHealth } from "./client/healthController/getApiHealth.ts";
 export { deleteApiV1KnowledgeBasesId } from "./client/knowledgeBasesController/deleteApiV1KnowledgeBasesId.ts";
 export { deleteApiV1KnowledgeBasesIdSourcesSourceid } from "./client/knowledgeBasesController/deleteApiV1KnowledgeBasesIdSourcesSourceid.ts";
 export { getApiV1KnowledgeBases } from "./client/knowledgeBasesController/getApiV1KnowledgeBases.ts";
@@ -165,6 +168,7 @@ export { getApiV1RerankersId } from "./client/rerankersController/getApiV1Rerank
 export { getApiV1RerankersSchema } from "./client/rerankersController/getApiV1RerankersSchema.ts";
 export { patchApiV1RerankersId } from "./client/rerankersController/patchApiV1RerankersId.ts";
 export { postApiV1Rerankers } from "./client/rerankersController/postApiV1Rerankers.ts";
+export { getApiVersion } from "./client/systemController/getApiVersion.ts";
 export { deleteApiV1LlmCallsIdMutationKey } from "./hooks/LLMCallsController/useDeleteApiV1LlmCallsId.ts";
 export { deleteApiV1LlmCallsIdMutationOptions } from "./hooks/LLMCallsController/useDeleteApiV1LlmCallsId.ts";
 export { useDeleteApiV1LlmCallsId } from "./hooks/LLMCallsController/useDeleteApiV1LlmCallsId.ts";
@@ -255,12 +259,12 @@ export { usePatchApiV1EmbeddingProfilesId } from "./hooks/embeddingProfilesContr
 export { postApiV1EmbeddingProfilesMutationKey } from "./hooks/embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
 export { postApiV1EmbeddingProfilesMutationOptions } from "./hooks/embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
 export { usePostApiV1EmbeddingProfiles } from "./hooks/embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
-export { getHealthQueryKey } from "./hooks/healthController/useGetHealth.ts";
-export { getHealthQueryOptions } from "./hooks/healthController/useGetHealth.ts";
-export { useGetHealth } from "./hooks/healthController/useGetHealth.ts";
-export { getHealthSuspenseQueryKey } from "./hooks/healthController/useGetHealthSuspense.ts";
-export { getHealthSuspenseQueryOptions } from "./hooks/healthController/useGetHealthSuspense.ts";
-export { useGetHealthSuspense } from "./hooks/healthController/useGetHealthSuspense.ts";
+export { getApiHealthQueryKey } from "./hooks/healthController/useGetApiHealth.ts";
+export { getApiHealthQueryOptions } from "./hooks/healthController/useGetApiHealth.ts";
+export { useGetApiHealth } from "./hooks/healthController/useGetApiHealth.ts";
+export { getApiHealthSuspenseQueryKey } from "./hooks/healthController/useGetApiHealthSuspense.ts";
+export { getApiHealthSuspenseQueryOptions } from "./hooks/healthController/useGetApiHealthSuspense.ts";
+export { useGetApiHealthSuspense } from "./hooks/healthController/useGetApiHealthSuspense.ts";
 export { deleteApiV1KnowledgeBasesIdMutationKey } from "./hooks/knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
 export { deleteApiV1KnowledgeBasesIdMutationOptions } from "./hooks/knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
 export { useDeleteApiV1KnowledgeBasesId } from "./hooks/knowledgeBasesController/useDeleteApiV1KnowledgeBasesId.ts";
@@ -378,6 +382,12 @@ export { usePatchApiV1RerankersId } from "./hooks/rerankersController/usePatchAp
 export { postApiV1RerankersMutationKey } from "./hooks/rerankersController/usePostApiV1Rerankers.ts";
 export { postApiV1RerankersMutationOptions } from "./hooks/rerankersController/usePostApiV1Rerankers.ts";
 export { usePostApiV1Rerankers } from "./hooks/rerankersController/usePostApiV1Rerankers.ts";
+export { getApiVersionQueryKey } from "./hooks/systemController/useGetApiVersion.ts";
+export { getApiVersionQueryOptions } from "./hooks/systemController/useGetApiVersion.ts";
+export { useGetApiVersion } from "./hooks/systemController/useGetApiVersion.ts";
+export { getApiVersionSuspenseQueryKey } from "./hooks/systemController/useGetApiVersionSuspense.ts";
+export { getApiVersionSuspenseQueryOptions } from "./hooks/systemController/useGetApiVersionSuspense.ts";
+export { useGetApiVersionSuspense } from "./hooks/systemController/useGetApiVersionSuspense.ts";
 export { deleteApiV1EmbeddingProfilesId200StatusEnum } from "./types/DeleteApiV1EmbeddingProfilesId.ts";
 export { deleteApiV1KnowledgeSourcesId200StatusEnum } from "./types/DeleteApiV1KnowledgeSourcesId.ts";
 export { deleteApiV1KnowledgeSourcesId200TypeEnum } from "./types/DeleteApiV1KnowledgeSourcesId.ts";

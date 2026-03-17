@@ -1,8 +1,8 @@
-export type { GetHealthQueryKey } from "./useGetHealth.ts";
-export type { GetHealthSuspenseQueryKey } from "./useGetHealthSuspense.ts";
-export { getHealthQueryKey } from "./useGetHealth.ts";
-export { getHealthQueryOptions } from "./useGetHealth.ts";
-export { useGetHealth } from "./useGetHealth.ts";
-export { getHealthSuspenseQueryKey } from "./useGetHealthSuspense.ts";
-export { getHealthSuspenseQueryOptions } from "./useGetHealthSuspense.ts";
-export { useGetHealthSuspense } from "./useGetHealthSuspense.ts";
+export type { GetApiHealthQueryKey } from "./useGetApiHealth.ts";
+export type { GetApiHealthSuspenseQueryKey } from "./useGetApiHealthSuspense.ts";
+export { getApiHealthQueryKey } from "./useGetApiHealth.ts";
+export { getApiHealthQueryOptions } from "./useGetApiHealth.ts";
+export { useGetApiHealth } from "./useGetApiHealth.ts";
+export { getApiHealthSuspenseQueryKey } from "./useGetApiHealthSuspense.ts";
+export { getApiHealthSuspenseQueryOptions } from "./useGetApiHealthSuspense.ts";
+export { useGetApiHealthSuspense } from "./useGetApiHealthSuspense.ts";

@@ -19,7 +19,7 @@ export { getApiV1EmbeddingProfiles } from "./embeddingProfilesController/getApiV
 export { getApiV1EmbeddingProfilesId } from "./embeddingProfilesController/getApiV1EmbeddingProfilesId.ts";
 export { patchApiV1EmbeddingProfilesId } from "./embeddingProfilesController/patchApiV1EmbeddingProfilesId.ts";
 export { postApiV1EmbeddingProfiles } from "./embeddingProfilesController/postApiV1EmbeddingProfiles.ts";
-export { getHealth } from "./healthController/getHealth.ts";
+export { getApiHealth } from "./healthController/getApiHealth.ts";
 export { deleteApiV1KnowledgeBasesId } from "./knowledgeBasesController/deleteApiV1KnowledgeBasesId.ts";
 export { deleteApiV1KnowledgeBasesIdSourcesSourceid } from "./knowledgeBasesController/deleteApiV1KnowledgeBasesIdSourcesSourceid.ts";
 export { getApiV1KnowledgeBases } from "./knowledgeBasesController/getApiV1KnowledgeBases.ts";
@@ -46,3 +46,4 @@ export { getApiV1RerankersId } from "./rerankersController/getApiV1RerankersId.t
 export { getApiV1RerankersSchema } from "./rerankersController/getApiV1RerankersSchema.ts";
 export { patchApiV1RerankersId } from "./rerankersController/patchApiV1RerankersId.ts";
 export { postApiV1Rerankers } from "./rerankersController/postApiV1Rerankers.ts";
+export { getApiVersion } from "./systemController/getApiVersion.ts";

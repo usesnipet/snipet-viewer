@@ -16,7 +16,6 @@ import {
 import { cn } from "../lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "../context/theme-provider";
-import { SystemService } from "../services/system-service";
 import { Button } from "./ui/button";
 import {
   Sidebar,
@@ -34,6 +33,7 @@ import {
   SidebarMenuSubItem,
   SidebarSeparator,
 } from "./ui/sidebar";
+import { useGetApiVersion } from "@/gen";
 
 const NAV_ITEMS = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
@@ -57,12 +57,9 @@ const NAV_ITEMS = [
 export function AppSidebar() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
-  const [version, setVersion] = React.useState<string>("...");
   const [expandedItems, setExpandedItems] = React.useState<string[]>(["Knowledge"]);
 
-  React.useEffect(() => {
-    SystemService.getVersion().then(setVersion);
-  }, []);
+  const { data: { version } = { version: "..." } } = useGetApiVersion();
 
   const toggleExpand = (label: string) => {
     setExpandedItems((prev) =>

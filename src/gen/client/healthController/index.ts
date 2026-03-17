@@ -1,1 +1,1 @@
-export { getHealth } from "./getHealth.ts";
+export { getApiHealth } from "./getApiHealth.ts";

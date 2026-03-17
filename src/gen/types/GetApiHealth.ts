@@ -7,16 +7,16 @@
 /**
  * @description Default Response
 */
-export type GetHealth200 = {
+export type GetApiHealth200 = {
     /**
      * @type string
     */
     status: string;
 };
 
-export type GetHealthQueryResponse = GetHealth200;
+export type GetApiHealthQueryResponse = GetApiHealth200;
 
-export type GetHealthQuery = {
-    Response: GetHealth200;
+export type GetApiHealthQuery = {
+    Response: GetApiHealth200;
     Errors: any;
 };
