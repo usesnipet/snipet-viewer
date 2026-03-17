@@ -14,8 +14,8 @@ export default function App() {
         <Route path="/" element={<RootLayout />}>
           <Route path="/" element={<Navigate to="/rerankers" replace />} />
           {/* <Route path="/knowledge/base" element={<KnowledgeBasePage />} />
-          <Route path="/knowledge/source" element={<KnowledgeSourcePage />} />
-          <Route path="/llms" element={<LLMPage />} /> */}
+          <Route path="/knowledge/source" element={<KnowledgeSourcePage />} /> */}
+          <Route path="/llms" element={<LLMPage />} />
           <Route path="/rerankers" element={<RerankerPage />} />
           {/* <Route path="/embeddings" element={<EmbeddingPage />} />
           <Route path="/observability" element={<ObservabilityPage />} /> */}

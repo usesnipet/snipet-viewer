@@ -1,31 +1,35 @@
-import { Suspense } from "react";
-import { LLMContent } from "./llm-content";
-import { Loader2 } from "lucide-react";
-import { Sidebar } from "../../components/sidebar";
+import { PageLayout } from "@/components/layout/page";
+import { Loader2, Plus } from "lucide-react";
+import { LLMList } from "./_components/llm-list";
+import { Button } from "@/components/ui/button";
+import { DialogType } from "@/dialogs";
+import { useCallback } from "react";
+import { useDialog } from "@/hooks/use-dialog";
 
 export function LLMPage() {
-  return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      <Sidebar />
-      
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto">
-        <div className="max-w-[1600px] mx-auto space-y-10">
-          <header className="flex flex-col gap-2">
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">LLM Configurations</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Connect and configure your Large Language Model providers.</p>
-          </header>
+  const { openDialog } = useDialog();
 
-          <Suspense 
-            fallback={
-              <div className="flex items-center justify-center h-64">
-                <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
-              </div>
-            }
-          >
-            <LLMContent />
-          </Suspense>
+  const handleCreate = useCallback(() => {
+    openDialog({ type: DialogType.CREATE_OR_UPDATE_LLM, props: { llm: undefined } });
+  }, [openDialog]);
+
+  return (
+    <PageLayout
+      title="LLM Configurations"
+      description="Connect and configure your Large Language Model providers."
+      fallback={
+        <div className="flex items-center justify-center h-64">
+          <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
         </div>
-      </main>
-    </div>
+      }
+      actions={
+        <Button onClick={handleCreate}>
+          <Plus className="w-4 h-4" />
+          Add LLM
+        </Button>
+      }
+    >
+      <LLMList />
+    </PageLayout>
   );
 }
