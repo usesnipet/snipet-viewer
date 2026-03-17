@@ -16,34 +16,39 @@ import {
 } from "@/gen";
 import { FormInput } from "@/components/form/input";
 import { FormSelect } from "@/components/form/select";
-import { SchemaForm } from "@/components/schema-form";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { DialogType } from ".";
 import { useQueryClient } from "@tanstack/react-query";
 import { LLM } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
 
 export type CreateOrUpdateLLMDialogProps = {
   llm?: LLM;
 };
 
-const baseSchema = z.object({
-  name: z.string().max(255).optional(),
+const llmSchema = z.object({
+  name: z.string().max(255).trim().optional(),
   provider: z.string().min(1, "Provider is required"),
+  config: z.unknown(),
+  maxLimits: z.unknown(),
 });
 
-type BaseValues = z.infer<typeof baseSchema>;
+type LLMSchema = z.infer<typeof llmSchema>;
 
 export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) => {
   const { toast } = useToast();
-  const { closeDialog } = useDialog();
+  const { closeDialog, openDialog } = useDialog();
 
   const isEditing = !!llm;
-  const form = useForm<BaseValues>({
-    resolver: zodResolver(baseSchema),
+  const form = useForm<LLMSchema>({
+    resolver: zodResolver(llmSchema),
     defaultValues: {
       name: llm?.name ?? "",
       provider: llm?.provider ?? "",
+      config: llm?.config ?? {},
+      maxLimits: llm?.maxLimits ?? {},
     },
   });
 
@@ -56,53 +61,29 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
   const selectedProvider = useWatch({ control: form.control, name: "provider" });
   const currentSchema = schemas.find((s) => s.targetId === selectedProvider)?.schema;
 
-  const onSubmit = async (baseValues: BaseValues, configValues: any) => {
-    const name =
-      baseValues.name != null && String(baseValues.name).trim() !== ""
-        ? baseValues.name
-        : null;
+  const onSubmit = async (data: LLMSchema) => {
     if (isEditing && llm) {
       updateLLM(
-        {
-          id: llm.id,
-          data: {
-            name,
-            provider: baseValues.provider,
-            config: configValues,
-            maxLimits: llm.maxLimits,
-            currentLimits: llm.currentLimits,
-          },
-        },
+        { id: llm.id, data: data },
         {
           onSuccess: () => {
             toast({ title: "LLM updated successfully" });
             queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_LLM);
           },
-          onError: () => {
-            toast({ title: "Failed to update LLM", variant: "destructive" });
-          },
+          onError: () => toast({ title: "Failed to update LLM", variant: "destructive" }),
         }
       );
     } else {
       createLLM(
-        {
-          data: {
-            name,
-            provider: baseValues.provider,
-            config: configValues,
-            maxLimits: {},
-          },
-        },
+        { data },
         {
           onSuccess: () => {
             toast({ title: "LLM created successfully" });
             queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_LLM);
           },
-          onError: () => {
-            toast({ title: "Failed to create LLM", variant: "destructive" });
-          },
+          onError: () => toast({ title: "Failed to create LLM", variant: "destructive" }),
         }
       );
     }
@@ -119,29 +100,38 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormInput name="name" label="LLM Name" />
-            <FormSelect
-              label="Provider"
-              name="provider"
-              options={schemas.map((s) => ({ label: s.targetId, value: s.targetId }))}
-            />
-          </div>
-
-          {currentSchema && (
-            <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
-              <SchemaForm
-                schema={currentSchema}
-                formData={llm?.config}
-                onSubmit={(configData) =>
-                  form.handleSubmit((baseData) => onSubmit(baseData, configData))()
-                }
-                submitLabel={isEditing ? "Update LLM" : "Create LLM"}
-              />
-            </div>
-          )}
-        </div>
+        <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <FormInput name="name" label="LLM Name" />
+          <FormSelect
+            label="Provider"
+            name="provider"
+            options={schemas.map((s) => ({ label: s.targetId, value: s.targetId }))}
+            fieldclassname="flex-1"
+            action={{
+              icon: <Settings />,
+              size: "icon-lg",
+              variant: "outline",
+              disabled: !currentSchema,
+              onClick: () => {
+                openDialog({
+                  type: DialogType.SCHEMA_FORM,
+                  props: {
+                    title: `Edit ${selectedProvider} Configuration`,
+                    description: `Configure the ${selectedProvider} LLM.`,
+                    schema: currentSchema,
+                    onSubmit: (configData) => {
+                      form.setValue("config", configData);
+                      closeDialog(DialogType.SCHEMA_FORM);
+                    },
+                    submitLabel: "Save",
+                    formData: llm?.config,
+                  },
+                });
+              }
+            }}
+          />
+          <Button type="submit">{isEditing ? "Update LLM" : "Create LLM"}</Button>
+        </form>
       </Form>
     </DialogContent>
   );

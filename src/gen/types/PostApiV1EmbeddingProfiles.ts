@@ -34,6 +34,12 @@ export type PostApiV1EmbeddingProfiles201 = {
     */
     createdAt: string;
     /**
+     * @minLength 1
+     * @maxLength 255
+     * @type string
+    */
+    splitterType: string;
+    /**
      * @type object
     */
     splitterSettings: {
@@ -77,6 +83,39 @@ export type PostApiV1EmbeddingProfiles201 = {
 /**
  * @description Default Response
 */
+export type PostApiV1EmbeddingProfiles400 = {
+    /**
+     * @type string
+    */
+    error: string;
+    /**
+     * @type array
+    */
+    details: {
+        /**
+         * @type string
+        */
+        instancePath: string;
+        /**
+         * @type string
+        */
+        schemaPath: string;
+        /**
+         * @type string | undefined
+        */
+        message?: string;
+        /**
+         * @type object | undefined
+        */
+        params?: {
+            [key: string]: any;
+        };
+    }[];
+};
+
+/**
+ * @description Default Response
+*/
 export type PostApiV1EmbeddingProfiles500 = {
     /**
      * @type string
@@ -102,6 +141,12 @@ export type PostApiV1EmbeddingProfilesMutationRequest = {
      * @type string
     */
     status: PostApiV1EmbeddingProfilesMutationRequestStatusEnumKey;
+    /**
+     * @minLength 1
+     * @maxLength 255
+     * @type string
+    */
+    splitterType: string;
     /**
      * @type object
     */
@@ -148,5 +193,5 @@ export type PostApiV1EmbeddingProfilesMutationResponse = PostApiV1EmbeddingProfi
 export type PostApiV1EmbeddingProfilesMutation = {
     Response: PostApiV1EmbeddingProfiles201;
     Request: PostApiV1EmbeddingProfilesMutationRequest;
-    Errors: PostApiV1EmbeddingProfiles500;
+    Errors: PostApiV1EmbeddingProfiles400 | PostApiV1EmbeddingProfiles500;
 };

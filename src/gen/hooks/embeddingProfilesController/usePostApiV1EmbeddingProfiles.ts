@@ -3,7 +3,7 @@
 * Do not edit manually.
 */
 
-import type { PostApiV1EmbeddingProfilesMutationRequest, PostApiV1EmbeddingProfilesMutationResponse, PostApiV1EmbeddingProfiles500 } from "../../types/PostApiV1EmbeddingProfiles.ts";
+import type { PostApiV1EmbeddingProfilesMutationRequest, PostApiV1EmbeddingProfilesMutationResponse, PostApiV1EmbeddingProfiles400, PostApiV1EmbeddingProfiles500 } from "../../types/PostApiV1EmbeddingProfiles.ts";
 import type { Client, RequestConfig, ResponseErrorConfig } from "@kubb/plugin-client/clients/axios";
 import type { UseMutationOptions, UseMutationResult, QueryClient } from "@tanstack/react-query";
 import { postApiV1EmbeddingProfiles } from "../../client/embeddingProfilesController/postApiV1EmbeddingProfiles.ts";
@@ -16,7 +16,7 @@ export type PostApiV1EmbeddingProfilesMutationKey = ReturnType<typeof postApiV1E
 export function postApiV1EmbeddingProfilesMutationOptions<TContext = unknown>(config: Partial<RequestConfig<PostApiV1EmbeddingProfilesMutationRequest>> & { client?: Client } = {}) {
 
         const mutationKey = postApiV1EmbeddingProfilesMutationKey()
-        return mutationOptions<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>({
+        return mutationOptions<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles400 | PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>({
           mutationKey,
           mutationFn: async({ data }) => {
             return postApiV1EmbeddingProfiles(data, config)
@@ -31,7 +31,7 @@ export function postApiV1EmbeddingProfilesMutationOptions<TContext = unknown>(co
  */
 export function usePostApiV1EmbeddingProfiles<TContext>(options: 
 {
-  mutation?: UseMutationOptions<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext> & { client?: QueryClient },
+  mutation?: UseMutationOptions<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles400 | PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext> & { client?: QueryClient },
   client?: Partial<RequestConfig<PostApiV1EmbeddingProfilesMutationRequest>> & { client?: Client },
 }
  = {}) {
@@ -40,13 +40,13 @@ export function usePostApiV1EmbeddingProfiles<TContext>(options:
           const { client: queryClient, ...mutationOptions } = mutation;
           const mutationKey = mutationOptions.mutationKey ?? postApiV1EmbeddingProfilesMutationKey()
 
-          const baseOptions = postApiV1EmbeddingProfilesMutationOptions(config) as UseMutationOptions<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>
+          const baseOptions = postApiV1EmbeddingProfilesMutationOptions(config) as UseMutationOptions<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles400 | PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>
           
 
-          return useMutation<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>({
+          return useMutation<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles400 | PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>({
             ...baseOptions,
             mutationKey,
             ...mutationOptions,
-          }, queryClient) as UseMutationResult<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>
+          }, queryClient) as UseMutationResult<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles400 | PostApiV1EmbeddingProfiles500>, {data: PostApiV1EmbeddingProfilesMutationRequest}, TContext>
       
 }

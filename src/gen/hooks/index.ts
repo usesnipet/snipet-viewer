@@ -25,6 +25,8 @@ export type { DeleteApiV1EmbeddingProfilesIdMutationKey } from "./embeddingProfi
 export type { GetApiV1EmbeddingProfilesQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfiles.ts";
 export type { GetApiV1EmbeddingProfilesIdQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesId.ts";
 export type { GetApiV1EmbeddingProfilesIdSuspenseQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesIdSuspense.ts";
+export type { GetApiV1EmbeddingProfilesSplitterSchemaQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export type { GetApiV1EmbeddingProfilesSplitterSchemaSuspenseQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
 export type { GetApiV1EmbeddingProfilesSuspenseQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSuspense.ts";
 export type { PatchApiV1EmbeddingProfilesIdMutationKey } from "./embeddingProfilesController/usePatchApiV1EmbeddingProfilesId.ts";
 export type { PostApiV1EmbeddingProfilesMutationKey } from "./embeddingProfilesController/usePostApiV1EmbeddingProfiles.ts";
@@ -152,6 +154,12 @@ export { useGetApiV1EmbeddingProfilesId } from "./embeddingProfilesController/us
 export { getApiV1EmbeddingProfilesIdSuspenseQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesIdSuspense.ts";
 export { getApiV1EmbeddingProfilesIdSuspenseQueryOptions } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesIdSuspense.ts";
 export { useGetApiV1EmbeddingProfilesIdSuspense } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesIdSuspense.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaQueryOptions } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export { useGetApiV1EmbeddingProfilesSplitterSchema } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaSuspenseQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaSuspenseQueryOptions } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
+export { useGetApiV1EmbeddingProfilesSplitterSchemaSuspense } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
 export { getApiV1EmbeddingProfilesSuspenseQueryKey } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSuspense.ts";
 export { getApiV1EmbeddingProfilesSuspenseQueryOptions } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSuspense.ts";
 export { useGetApiV1EmbeddingProfilesSuspense } from "./embeddingProfilesController/useGetApiV1EmbeddingProfilesSuspense.ts";

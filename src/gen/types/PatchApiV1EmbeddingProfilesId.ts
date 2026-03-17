@@ -41,6 +41,12 @@ export type PatchApiV1EmbeddingProfilesId200 = {
     */
     createdAt: string;
     /**
+     * @minLength 1
+     * @maxLength 255
+     * @type string
+    */
+    splitterType: string;
+    /**
      * @type object
     */
     splitterSettings: {
@@ -84,6 +90,39 @@ export type PatchApiV1EmbeddingProfilesId200 = {
 /**
  * @description Default Response
 */
+export type PatchApiV1EmbeddingProfilesId400 = {
+    /**
+     * @type string
+    */
+    error: string;
+    /**
+     * @type array
+    */
+    details: {
+        /**
+         * @type string
+        */
+        instancePath: string;
+        /**
+         * @type string
+        */
+        schemaPath: string;
+        /**
+         * @type string | undefined
+        */
+        message?: string;
+        /**
+         * @type object | undefined
+        */
+        params?: {
+            [key: string]: any;
+        };
+    }[];
+};
+
+/**
+ * @description Default Response
+*/
 export type PatchApiV1EmbeddingProfilesId404 = {
     /**
      * @type string
@@ -119,6 +158,12 @@ export type PatchApiV1EmbeddingProfilesIdMutationRequest = {
      * @type string | undefined
     */
     status?: PatchApiV1EmbeddingProfilesIdMutationRequestStatusEnumKey;
+    /**
+     * @minLength 1
+     * @maxLength 255
+     * @type string | undefined
+    */
+    splitterType?: string;
     /**
      * @type object | undefined
     */
@@ -166,5 +211,5 @@ export type PatchApiV1EmbeddingProfilesIdMutation = {
     Response: PatchApiV1EmbeddingProfilesId200;
     Request: PatchApiV1EmbeddingProfilesIdMutationRequest;
     PathParams: PatchApiV1EmbeddingProfilesIdPathParams;
-    Errors: PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500;
+    Errors: PatchApiV1EmbeddingProfilesId400 | PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500;
 };

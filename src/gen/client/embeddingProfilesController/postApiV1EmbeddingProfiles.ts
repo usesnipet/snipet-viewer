@@ -4,7 +4,7 @@
 */
 
 import fetch from "@kubb/plugin-client/clients/axios";
-import type { PostApiV1EmbeddingProfilesMutationRequest, PostApiV1EmbeddingProfilesMutationResponse, PostApiV1EmbeddingProfiles500 } from "../../types/PostApiV1EmbeddingProfiles.ts";
+import type { PostApiV1EmbeddingProfilesMutationRequest, PostApiV1EmbeddingProfilesMutationResponse, PostApiV1EmbeddingProfiles400, PostApiV1EmbeddingProfiles500 } from "../../types/PostApiV1EmbeddingProfiles.ts";
 import type { Client, RequestConfig, ResponseErrorConfig } from "@kubb/plugin-client/clients/axios";
 
 function getPostApiV1EmbeddingProfilesUrl() {
@@ -21,6 +21,6 @@ export async function postApiV1EmbeddingProfiles(data: PostApiV1EmbeddingProfile
 
   const requestData = data
 
-  const res = await request<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles500>, PostApiV1EmbeddingProfilesMutationRequest>({ method : "POST", url : getPostApiV1EmbeddingProfilesUrl().url.toString(), data : requestData, ... requestConfig })
+  const res = await request<PostApiV1EmbeddingProfilesMutationResponse, ResponseErrorConfig<PostApiV1EmbeddingProfiles400 | PostApiV1EmbeddingProfiles500>, PostApiV1EmbeddingProfilesMutationRequest>({ method : "POST", url : getPostApiV1EmbeddingProfilesUrl().url.toString(), data : requestData, ... requestConfig })
   return res.data
 }

@@ -4,19 +4,19 @@ import { RJSFSchema, UiSchema, WidgetProps, FieldTemplateProps, ObjectFieldTempl
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { FormItem, FormLabel } from "./ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
+import { Field, FieldLabel } from "./ui/field";
 
 // Custom Widgets to match our UI
 const CustomBaseInput = (props: WidgetProps) => {
-  const { value, readonly, disabled, onChange, onBlur, onFocus, options, schema, label, id, placeholder } = props;
+  const { value, readonly, disabled, onChange, onBlur, onFocus, options, defaultValue, schema, label, id, placeholder } = props;
 
   const type = schema.type === "integer" || schema.type === "number" ? "number" : "text";
 
   return (
-    <FormItem>
-      <FormLabel>{label}</FormLabel>
+    <Field>
+      <FieldLabel>{label}</FieldLabel>
       <Input
         id={id}
         value={value || ""}
@@ -26,8 +26,9 @@ const CustomBaseInput = (props: WidgetProps) => {
         onChange={(e) => onChange(type === "number" ? Number(e.target.value) : e.target.value)}
         onBlur={onBlur && ((e) => onBlur(id, e.target.value))}
         onFocus={onFocus && ((e) => onFocus(id, e.target.value))}
+        defaultValue={defaultValue}
       />
-    </FormItem>
+    </Field>
   );
 };
 
@@ -36,7 +37,7 @@ const CustomCheckbox = (props: WidgetProps) => {
   const { value, readonly, disabled, onChange, onBlur, onFocus, options, schema, label, id, placeholder } = props;
 
   return (
-    <FormItem className="flex items-center gap-2">
+    <Field className="flex items-center gap-2">
       <Checkbox
         checked={value}
         disabled={disabled || readonly}
@@ -45,8 +46,8 @@ const CustomCheckbox = (props: WidgetProps) => {
         onFocus={onFocus && ((e) => onFocus(id, e.target.value))}
         id={id}
       />
-      <FormLabel htmlFor={id}>{label}</FormLabel>
-    </FormItem>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+    </Field>
   );
 };
 const CustomSelect = (props: WidgetProps) => {
@@ -57,8 +58,8 @@ const CustomSelect = (props: WidgetProps) => {
   }));
 
   return (
-    <FormItem>
-      <FormLabel>{label}</FormLabel>
+    <Field>
+      <FieldLabel>{label}</FieldLabel>
       <Select value={value || ""} onValueChange={onChange}>
         <SelectTrigger>
           <SelectValue placeholder={placeholder || (schema.description as string)} />
@@ -69,7 +70,7 @@ const CustomSelect = (props: WidgetProps) => {
           ))}
         </SelectContent>
       </Select>
-    </FormItem>
+    </Field>
   );
 };
 
@@ -110,16 +111,27 @@ const CustomObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
   );
 };
 
-interface SchemaFormProps {
+export interface SchemaFormProps {
   schema: RJSFSchema;
   uiSchema?: UiSchema;
   formData?: any;
   onSubmit: (data: any) => void;
+  onCancel?: () => void;
+  cancelLabel?: string;
   submitLabel?: string;
   loading?: boolean;
 }
 
-export function SchemaForm({ schema, uiSchema, formData, onSubmit, submitLabel = "Submit", loading }: SchemaFormProps) {
+export function SchemaForm({
+  schema,
+  uiSchema,
+  formData,
+  onCancel,
+  cancelLabel = "Cancel",
+  onSubmit,
+  submitLabel = "Submit",
+  loading,
+}: SchemaFormProps) {
   const widgets: RegistryWidgetsType<any, RJSFSchema, any> = {
     TextWidget: CustomBaseInput,
     SelectWidget: CustomSelect,
@@ -147,6 +159,11 @@ export function SchemaForm({ schema, uiSchema, formData, onSubmit, submitLabel =
           <Button type="submit" disabled={loading}>
             {submitLabel}
           </Button>
+          {onCancel && (
+            <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+              {cancelLabel}
+            </Button>
+          )}
         </div>
       </Form>
     </div>

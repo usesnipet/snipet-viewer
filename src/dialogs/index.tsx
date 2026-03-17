@@ -4,6 +4,7 @@ import { CreateOrUpdateKnowledgeSourceDialog } from './create-or-update-knowledg
 import { CreateOrUpdateKnowledgeBaseDialog } from './create-or-update-knowledge-base';
 import { CreateOrUpdateEmbeddingProfileDialog } from './create-or-update-embedding-profile';
 import { ConfirmDialog } from './confirm';
+import { SchemaFormDialog } from './schema-form';
 
 export enum DialogType {
   CREATE_OR_UPDATE_RERANKER = 'create-or-update-reranker',
@@ -12,6 +13,7 @@ export enum DialogType {
   CREATE_OR_UPDATE_KNOWLEDGE_SOURCE = 'create-or-update-knowledge-source',
   CREATE_OR_UPDATE_KNOWLEDGE_BASE = 'create-or-update-knowledge-base',
   CONFIRM = 'confirm',
+  SCHEMA_FORM = 'schema-form',
 }
 
 export const dialogs = {
@@ -21,4 +23,5 @@ export const dialogs = {
   [DialogType.CREATE_OR_UPDATE_KNOWLEDGE_SOURCE]: CreateOrUpdateKnowledgeSourceDialog,
   [DialogType.CREATE_OR_UPDATE_KNOWLEDGE_BASE]: CreateOrUpdateKnowledgeBaseDialog,
   [DialogType.CONFIRM]: ConfirmDialog,
+  [DialogType.SCHEMA_FORM]: SchemaFormDialog,
 } as const;

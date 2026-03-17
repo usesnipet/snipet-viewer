@@ -186,6 +186,12 @@ export type PostApiV1KnowledgeSourcesMutationRequest = {
         */
         status: EmbeddingProfileStatusEnumKey;
         /**
+         * @minLength 1
+         * @maxLength 255
+         * @type string
+        */
+        splitterType: string;
+        /**
          * @type object
         */
         splitterSettings: {

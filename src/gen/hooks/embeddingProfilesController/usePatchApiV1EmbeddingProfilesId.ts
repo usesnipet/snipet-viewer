@@ -3,7 +3,7 @@
 * Do not edit manually.
 */
 
-import type { PatchApiV1EmbeddingProfilesIdMutationRequest, PatchApiV1EmbeddingProfilesIdMutationResponse, PatchApiV1EmbeddingProfilesIdPathParams, PatchApiV1EmbeddingProfilesId404, PatchApiV1EmbeddingProfilesId500 } from "../../types/PatchApiV1EmbeddingProfilesId.ts";
+import type { PatchApiV1EmbeddingProfilesIdMutationRequest, PatchApiV1EmbeddingProfilesIdMutationResponse, PatchApiV1EmbeddingProfilesIdPathParams, PatchApiV1EmbeddingProfilesId400, PatchApiV1EmbeddingProfilesId404, PatchApiV1EmbeddingProfilesId500 } from "../../types/PatchApiV1EmbeddingProfilesId.ts";
 import type { Client, RequestConfig, ResponseErrorConfig } from "@kubb/plugin-client/clients/axios";
 import type { UseMutationOptions, UseMutationResult, QueryClient } from "@tanstack/react-query";
 import { patchApiV1EmbeddingProfilesId } from "../../client/embeddingProfilesController/patchApiV1EmbeddingProfilesId.ts";
@@ -16,7 +16,7 @@ export type PatchApiV1EmbeddingProfilesIdMutationKey = ReturnType<typeof patchAp
 export function patchApiV1EmbeddingProfilesIdMutationOptions<TContext = unknown>(config: Partial<RequestConfig<PatchApiV1EmbeddingProfilesIdMutationRequest>> & { client?: Client } = {}) {
 
         const mutationKey = patchApiV1EmbeddingProfilesIdMutationKey()
-        return mutationOptions<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>({
+        return mutationOptions<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId400 | PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>({
           mutationKey,
           mutationFn: async({ id, data }) => {
             return patchApiV1EmbeddingProfilesId(id, data, config)
@@ -31,7 +31,7 @@ export function patchApiV1EmbeddingProfilesIdMutationOptions<TContext = unknown>
  */
 export function usePatchApiV1EmbeddingProfilesId<TContext>(options: 
 {
-  mutation?: UseMutationOptions<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext> & { client?: QueryClient },
+  mutation?: UseMutationOptions<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId400 | PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext> & { client?: QueryClient },
   client?: Partial<RequestConfig<PatchApiV1EmbeddingProfilesIdMutationRequest>> & { client?: Client },
 }
  = {}) {
@@ -40,13 +40,13 @@ export function usePatchApiV1EmbeddingProfilesId<TContext>(options:
           const { client: queryClient, ...mutationOptions } = mutation;
           const mutationKey = mutationOptions.mutationKey ?? patchApiV1EmbeddingProfilesIdMutationKey()
 
-          const baseOptions = patchApiV1EmbeddingProfilesIdMutationOptions(config) as UseMutationOptions<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>
+          const baseOptions = patchApiV1EmbeddingProfilesIdMutationOptions(config) as UseMutationOptions<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId400 | PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>
           
 
-          return useMutation<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>({
+          return useMutation<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId400 | PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>({
             ...baseOptions,
             mutationKey,
             ...mutationOptions,
-          }, queryClient) as UseMutationResult<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>
+          }, queryClient) as UseMutationResult<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId400 | PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, {id: PatchApiV1EmbeddingProfilesIdPathParams["id"], data: PatchApiV1EmbeddingProfilesIdMutationRequest}, TContext>
       
 }

@@ -4,7 +4,7 @@
 */
 
 import fetch from "@kubb/plugin-client/clients/axios";
-import type { PatchApiV1EmbeddingProfilesIdMutationRequest, PatchApiV1EmbeddingProfilesIdMutationResponse, PatchApiV1EmbeddingProfilesIdPathParams, PatchApiV1EmbeddingProfilesId404, PatchApiV1EmbeddingProfilesId500 } from "../../types/PatchApiV1EmbeddingProfilesId.ts";
+import type { PatchApiV1EmbeddingProfilesIdMutationRequest, PatchApiV1EmbeddingProfilesIdMutationResponse, PatchApiV1EmbeddingProfilesIdPathParams, PatchApiV1EmbeddingProfilesId400, PatchApiV1EmbeddingProfilesId404, PatchApiV1EmbeddingProfilesId500 } from "../../types/PatchApiV1EmbeddingProfilesId.ts";
 import type { Client, RequestConfig, ResponseErrorConfig } from "@kubb/plugin-client/clients/axios";
 
 function getPatchApiV1EmbeddingProfilesIdUrl(id: PatchApiV1EmbeddingProfilesIdPathParams["id"]) {
@@ -21,6 +21,6 @@ export async function patchApiV1EmbeddingProfilesId(id: PatchApiV1EmbeddingProfi
 
   const requestData = data
 
-  const res = await request<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, PatchApiV1EmbeddingProfilesIdMutationRequest>({ method : "PATCH", url : getPatchApiV1EmbeddingProfilesIdUrl(id).url.toString(), data : requestData, ... requestConfig })
+  const res = await request<PatchApiV1EmbeddingProfilesIdMutationResponse, ResponseErrorConfig<PatchApiV1EmbeddingProfilesId400 | PatchApiV1EmbeddingProfilesId404 | PatchApiV1EmbeddingProfilesId500>, PatchApiV1EmbeddingProfilesIdMutationRequest>({ method : "PATCH", url : getPatchApiV1EmbeddingProfilesIdUrl(id).url.toString(), data : requestData, ... requestConfig })
   return res.data
 }

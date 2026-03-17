@@ -13,17 +13,18 @@ import { useToast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import z from "zod";
-import { Button } from "@/components/ui/button";
 
 import type { EmbeddingProfile, LLM } from "@/types";
 import {
   getApiV1EmbeddingProfilesSuspenseQueryKey,
+  useGetApiV1EmbeddingProfilesSplitterSchema,
   useGetApiV1LlmsSuspense,
   usePatchApiV1EmbeddingProfilesId,
   usePostApiV1EmbeddingProfiles,
 } from "@/gen";
+import { SchemaForm } from "@/components/schema-form";
 import { DialogType } from ".";
 
 export type CreateOrUpdateEmbeddingProfileDialogProps = {
@@ -34,9 +35,7 @@ const formSchema = z.object({
   name: z.string().min(1, "Name is required").max(255),
   status: z.enum(["ACTIVE", "DEPRECATED"]),
   llmId: z.string().min(1, "LLM is required"),
-  splitterStrategy: z.string().min(1, "Strategy is required"),
-  chunkSize: z.coerce.number().int().positive("Chunk size must be > 0"),
-  chunkOverlap: z.coerce.number().int().nonnegative("Chunk overlap must be >= 0"),
+  splitterType: z.string().min(1, "Splitter type is required"),
   toASCII: z.boolean().optional(),
   removeNewlines: z.boolean().optional(),
   removeWhitespace: z.boolean().optional(),
@@ -77,9 +76,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
       name: embeddingProfile?.name ?? "",
       status: embeddingProfile?.status ?? "ACTIVE",
       llmId: embeddingProfile?.llmId ?? "",
-      splitterStrategy: String(initialSplitter.strategy ?? "recursive"),
-      chunkSize: Number(initialSplitter.chunkSize ?? 1000),
-      chunkOverlap: Number(initialSplitter.chunkOverlap ?? 200),
+      splitterType: String((embeddingProfile as any)?.splitterType ?? ""),
 
       toASCII: Boolean(initialPre.toASCII ?? false),
       removeNewlines: Boolean(initialPre.removeNewlines ?? true),
@@ -93,22 +90,26 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
   const { mutate: createEmbeddingProfile } = usePostApiV1EmbeddingProfiles();
   const { mutate: updateEmbeddingProfile } = usePatchApiV1EmbeddingProfilesId();
 
-  const onSubmit = (values: FormValues) => {
+
+  const { data: splitterSchemas = [] } = useGetApiV1EmbeddingProfilesSplitterSchema();
+
+  const selectedSplitterType = useWatch({ control: form.control, name: "splitterType" });
+  const currentSchema = splitterSchemas.find((s) => s.targetId === selectedSplitterType)?.schema ?? null;
+
+  const onSubmit = (values: FormValues, splitterConfig: any) => {
     const payload = {
       name: values.name,
       status: values.status,
       llmId: values.llmId,
-      splitterSettings: {
-        strategy: values.splitterStrategy,
-        chunkSize: values.chunkSize,
-        chunkOverlap: values.chunkOverlap,
-      },
+      splitterSettings: splitterConfig,
+      // splitterType is sent at top-level to backend
+      splitterType: values.splitterType,
       preProcessorSettings: {
-        toASCII: values.toASCII ?? false,
-        removeNewlines: values.removeNewlines ?? false,
-        removeWhitespace: values.removeWhitespace ?? false,
-        trim: values.trim ?? false,
-        lowercase: values.lowercase ?? false,
+        toASCII: values.toASCII ?? true,
+        removeNewlines: values.removeNewlines ?? true,
+        removeWhitespace: values.removeWhitespace ?? true,
+        trim: values.trim ?? true,
+        lowercase: values.lowercase ?? true,
         uppercase: values.uppercase ?? false,
       },
     };
@@ -163,7 +164,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
       </DialogHeader>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormInput name="name" label="Profile Name" />
             <FormSelect
@@ -185,27 +186,27 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <FormSelect
-                  name="splitterStrategy"
-                  label="Strategy"
-                  options={[
-                    { label: "recursive", value: "recursive" },
-                    { label: "token", value: "token" },
-                    { label: "character", value: "character" },
-                  ]}
-                />
-                <FormInput
-                  name="chunkSize"
-                  label="Chunk size"
-                  type="number"
-                  inputMode="numeric"
-                />
-                <FormInput
-                  name="chunkOverlap"
-                  label="Chunk overlap"
-                  type="number"
-                  inputMode="numeric"
+                  name="splitterType"
+                  label="Splitter type"
+                  options={splitterSchemas.map((s) => ({
+                    label: s.targetId,
+                    value: s.targetId,
+                  }))}
                 />
               </div>
+              {currentSchema && (
+                <div className="mt-4">
+                  <SchemaForm
+                    schema={currentSchema as any}
+                    formData={initialSplitter}
+                    onSubmit={(configData) =>
+                      form.handleSubmit((baseData) => onSubmit(baseData, configData))()
+                    }
+                    submitLabel={isEditing ? "Update Profile" : "Create Profile"}
+                    loading={form.formState.isSubmitting}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
@@ -221,12 +222,6 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
                 <FormSwitch name="uppercase" label="Uppercase" />
               </div>
             </div>
-          </div>
-
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              {isEditing ? "Update Profile" : "Create Profile"}
-            </Button>
           </div>
         </form>
       </Form>

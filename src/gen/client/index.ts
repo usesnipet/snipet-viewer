@@ -17,6 +17,7 @@ export { postApiV1EmbeddingProcesses } from "./embeddingProcessesController/post
 export { deleteApiV1EmbeddingProfilesId } from "./embeddingProfilesController/deleteApiV1EmbeddingProfilesId.ts";
 export { getApiV1EmbeddingProfiles } from "./embeddingProfilesController/getApiV1EmbeddingProfiles.ts";
 export { getApiV1EmbeddingProfilesId } from "./embeddingProfilesController/getApiV1EmbeddingProfilesId.ts";
+export { getApiV1EmbeddingProfilesSplitterSchema } from "./embeddingProfilesController/getApiV1EmbeddingProfilesSplitterSchema.ts";
 export { patchApiV1EmbeddingProfilesId } from "./embeddingProfilesController/patchApiV1EmbeddingProfilesId.ts";
 export { postApiV1EmbeddingProfiles } from "./embeddingProfilesController/postApiV1EmbeddingProfiles.ts";
 export { getApiHealth } from "./healthController/getApiHealth.ts";

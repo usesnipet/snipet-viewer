@@ -2,6 +2,8 @@ export type { DeleteApiV1EmbeddingProfilesIdMutationKey } from "./useDeleteApiV1
 export type { GetApiV1EmbeddingProfilesQueryKey } from "./useGetApiV1EmbeddingProfiles.ts";
 export type { GetApiV1EmbeddingProfilesIdQueryKey } from "./useGetApiV1EmbeddingProfilesId.ts";
 export type { GetApiV1EmbeddingProfilesIdSuspenseQueryKey } from "./useGetApiV1EmbeddingProfilesIdSuspense.ts";
+export type { GetApiV1EmbeddingProfilesSplitterSchemaQueryKey } from "./useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export type { GetApiV1EmbeddingProfilesSplitterSchemaSuspenseQueryKey } from "./useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
 export type { GetApiV1EmbeddingProfilesSuspenseQueryKey } from "./useGetApiV1EmbeddingProfilesSuspense.ts";
 export type { PatchApiV1EmbeddingProfilesIdMutationKey } from "./usePatchApiV1EmbeddingProfilesId.ts";
 export type { PostApiV1EmbeddingProfilesMutationKey } from "./usePostApiV1EmbeddingProfiles.ts";
@@ -17,6 +19,12 @@ export { useGetApiV1EmbeddingProfilesId } from "./useGetApiV1EmbeddingProfilesId
 export { getApiV1EmbeddingProfilesIdSuspenseQueryKey } from "./useGetApiV1EmbeddingProfilesIdSuspense.ts";
 export { getApiV1EmbeddingProfilesIdSuspenseQueryOptions } from "./useGetApiV1EmbeddingProfilesIdSuspense.ts";
 export { useGetApiV1EmbeddingProfilesIdSuspense } from "./useGetApiV1EmbeddingProfilesIdSuspense.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaQueryKey } from "./useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaQueryOptions } from "./useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export { useGetApiV1EmbeddingProfilesSplitterSchema } from "./useGetApiV1EmbeddingProfilesSplitterSchema.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaSuspenseQueryKey } from "./useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
+export { getApiV1EmbeddingProfilesSplitterSchemaSuspenseQueryOptions } from "./useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
+export { useGetApiV1EmbeddingProfilesSplitterSchemaSuspense } from "./useGetApiV1EmbeddingProfilesSplitterSchemaSuspense.ts";
 export { getApiV1EmbeddingProfilesSuspenseQueryKey } from "./useGetApiV1EmbeddingProfilesSuspense.ts";
 export { getApiV1EmbeddingProfilesSuspenseQueryOptions } from "./useGetApiV1EmbeddingProfilesSuspense.ts";
 export { useGetApiV1EmbeddingProfilesSuspense } from "./useGetApiV1EmbeddingProfilesSuspense.ts";

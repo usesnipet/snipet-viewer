@@ -41,6 +41,12 @@ export type GetApiV1EmbeddingProfilesId200 = {
     */
     createdAt: string;
     /**
+     * @minLength 1
+     * @maxLength 255
+     * @type string
+    */
+    splitterType: string;
+    /**
      * @type object
     */
     splitterSettings: {
