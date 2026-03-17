@@ -17,8 +17,8 @@ export default function App() {
           <Route path="/knowledge/source" element={<KnowledgeSourcePage />} />
           <Route path="/llms" element={<LLMPage />} />
           <Route path="/rerankers" element={<RerankerPage />} />
-          {/* <Route path="/embeddings" element={<EmbeddingPage />} />
-          <Route path="/observability" element={<ObservabilityPage />} /> */}
+          <Route path="/embeddings" element={<EmbeddingPage />} />
+          {/* <Route path="/observability" element={<ObservabilityPage />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

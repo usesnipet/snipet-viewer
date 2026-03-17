@@ -30,7 +30,7 @@ export const FormSelect = (props: Props) => {
               <SelectContent>
                 {
                   props.options.map(opt => (
-                    <SelectItem key={opt.value} value={opt.value}>{opt.value}</SelectItem>
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
                   ))
                 }
               </SelectContent>

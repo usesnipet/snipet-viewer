@@ -58,7 +58,6 @@ export function AppSidebar() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const [expandedItems, setExpandedItems] = React.useState<string[]>(["Knowledge"]);
-
   const { data: { version } = { version: "..." } } = useGetApiVersion();
 
   const toggleExpand = (label: string) => {
@@ -73,8 +72,8 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="p-4">
         <Link to="/" className="flex items-center gap-3 px-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-200 dark:shadow-none">
-            <Zap className="h-5 w-5 fill-current" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg">
+            <img src={theme === "light" ? "/images/snipet-black.png" : "/images/snipet-white.png"} alt="Snipet logo" className="h-5 w-5" />
           </div>
           <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white">
             Snipet
