@@ -3,24 +3,24 @@
 * Do not edit manually.
 */
 
-import type { GetApiV1EmbeddingProfilesIdQueryResponse, GetApiV1EmbeddingProfilesIdPathParams, GetApiV1EmbeddingProfilesId404, GetApiV1EmbeddingProfilesId500 } from "../../types/GetApiV1EmbeddingProfilesId.ts";
+import type { GetApiV1EmbeddingProfilesIdQueryResponse, GetApiV1EmbeddingProfilesIdPathParams, GetApiV1EmbeddingProfilesIdQueryParams, GetApiV1EmbeddingProfilesId404, GetApiV1EmbeddingProfilesId500 } from "../../types/GetApiV1EmbeddingProfilesId.ts";
 import type { Client, RequestConfig, ResponseErrorConfig } from "@kubb/plugin-client/clients/axios";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryResult } from "@tanstack/react-query";
 import { getApiV1EmbeddingProfilesId } from "../../client/embeddingProfilesController/getApiV1EmbeddingProfilesId.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-export const getApiV1EmbeddingProfilesIdQueryKey = (id: GetApiV1EmbeddingProfilesIdPathParams["id"]) => [{ url: '/api/v1/embedding-profiles/:id', params: {id:id} }] as const
+export const getApiV1EmbeddingProfilesIdQueryKey = (id: GetApiV1EmbeddingProfilesIdPathParams["id"], params?: GetApiV1EmbeddingProfilesIdQueryParams) => [{ url: '/api/v1/embedding-profiles/:id', params: {id:id} }, ...(params ? [params] : [])] as const
 
 export type GetApiV1EmbeddingProfilesIdQueryKey = ReturnType<typeof getApiV1EmbeddingProfilesIdQueryKey>
 
-export function getApiV1EmbeddingProfilesIdQueryOptions(id: GetApiV1EmbeddingProfilesIdPathParams["id"], config: Partial<RequestConfig> & { client?: Client } = {}) {
+export function getApiV1EmbeddingProfilesIdQueryOptions(id: GetApiV1EmbeddingProfilesIdPathParams["id"], params?: GetApiV1EmbeddingProfilesIdQueryParams, config: Partial<RequestConfig> & { client?: Client } = {}) {
 
-        const queryKey = getApiV1EmbeddingProfilesIdQueryKey(id)
+        const queryKey = getApiV1EmbeddingProfilesIdQueryKey(id, params)
         return queryOptions<GetApiV1EmbeddingProfilesIdQueryResponse, ResponseErrorConfig<GetApiV1EmbeddingProfilesId404 | GetApiV1EmbeddingProfilesId500>, GetApiV1EmbeddingProfilesIdQueryResponse, typeof queryKey>({
          enabled: !!(id),
          queryKey,
          queryFn: async ({ signal }) => {
-            return getApiV1EmbeddingProfilesId(id, { ...config, signal: config.signal ?? signal })
+            return getApiV1EmbeddingProfilesId(id, params, { ...config, signal: config.signal ?? signal })
          },
         })
 
@@ -30,7 +30,7 @@ export function getApiV1EmbeddingProfilesIdQueryOptions(id: GetApiV1EmbeddingPro
  * @description Get an embedding profile by ID
  * {@link /api/v1/embedding-profiles/:id}
  */
-export function useGetApiV1EmbeddingProfilesId<TData = GetApiV1EmbeddingProfilesIdQueryResponse, TQueryData = GetApiV1EmbeddingProfilesIdQueryResponse, TQueryKey extends QueryKey = GetApiV1EmbeddingProfilesIdQueryKey>(id: GetApiV1EmbeddingProfilesIdPathParams["id"], options: 
+export function useGetApiV1EmbeddingProfilesId<TData = GetApiV1EmbeddingProfilesIdQueryResponse, TQueryData = GetApiV1EmbeddingProfilesIdQueryResponse, TQueryKey extends QueryKey = GetApiV1EmbeddingProfilesIdQueryKey>(id: GetApiV1EmbeddingProfilesIdPathParams["id"], params?: GetApiV1EmbeddingProfilesIdQueryParams, options: 
 {
   query?: Partial<QueryObserverOptions<GetApiV1EmbeddingProfilesIdQueryResponse, ResponseErrorConfig<GetApiV1EmbeddingProfilesId404 | GetApiV1EmbeddingProfilesId500>, TData, TQueryData, TQueryKey>> & { client?: QueryClient },
   client?: Partial<RequestConfig> & { client?: Client }
@@ -39,11 +39,11 @@ export function useGetApiV1EmbeddingProfilesId<TData = GetApiV1EmbeddingProfiles
 
          const { query: queryConfig = {}, client: config = {} } = options ?? {}
          const { client: queryClient, ...resolvedOptions } = queryConfig
-         const queryKey = resolvedOptions?.queryKey ?? getApiV1EmbeddingProfilesIdQueryKey(id)
+         const queryKey = resolvedOptions?.queryKey ?? getApiV1EmbeddingProfilesIdQueryKey(id, params)
          
 
          const query = useQuery({
-          ...getApiV1EmbeddingProfilesIdQueryOptions(id, config),
+          ...getApiV1EmbeddingProfilesIdQueryOptions(id, params, config),
           ...resolvedOptions,
           queryKey,
          } as unknown as QueryObserverOptions, queryClient) as UseQueryResult<TData, ResponseErrorConfig<GetApiV1EmbeddingProfilesId404 | GetApiV1EmbeddingProfilesId500>> & { queryKey: TQueryKey }

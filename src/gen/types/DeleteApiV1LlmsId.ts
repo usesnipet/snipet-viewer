@@ -11,6 +11,16 @@ export type DeleteApiV1LlmsIdPathParams = {
     id: string;
 };
 
+export const deleteApiV1LlmsId200TypeEnum = {
+    TEXT_GENERATION: "TEXT_GENERATION",
+    EMBEDDING: "EMBEDDING",
+    IMAGE_GENERATION: "IMAGE_GENERATION",
+    AUDIO_TRANSCRIPTION: "AUDIO_TRANSCRIPTION",
+    VIDEO_GENERATION: "VIDEO_GENERATION"
+} as const;
+
+export type DeleteApiV1LlmsId200TypeEnumKey = (typeof deleteApiV1LlmsId200TypeEnum)[keyof typeof deleteApiV1LlmsId200TypeEnum];
+
 /**
  * @description Default Response
 */
@@ -31,6 +41,10 @@ export type DeleteApiV1LlmsId200 = {
     */
     provider: string;
     config: any;
+    /**
+     * @type string
+    */
+    type: DeleteApiV1LlmsId200TypeEnumKey;
     maxLimits: any;
     currentLimits: any;
     /**

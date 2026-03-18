@@ -29,10 +29,11 @@ export const FormSelect = (props: Props) => {
     if (!props.action) return null;
     return (
       <Button
-       disabled={props.action.disabled ?? false}
-       size={props.action.size ?? 'default'}
-       variant={props.action.variant ?? 'outline'}
-       onClick={props.action.onClick}
+        type="button"
+        disabled={props.action.disabled ?? false}
+        size={props.action.size ?? 'default'}
+        variant={props.action.variant ?? 'outline'}
+        onClick={props.action.onClick}
       >
         {props.action.icon}
         {props.action.label}

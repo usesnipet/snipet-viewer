@@ -36,6 +36,10 @@ export type GetApiV1EmbeddingProfilesQueryParams = {
      * @type string | undefined, uuid
     */
     llmId?: string;
+    /**
+     * @type boolean | undefined
+    */
+    includeLLM?: boolean;
 };
 
 export const getApiV1EmbeddingProfiles200StatusEnum = {

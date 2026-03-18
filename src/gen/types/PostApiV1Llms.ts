@@ -4,6 +4,16 @@
 */
 
 
+export const postApiV1Llms201TypeEnum = {
+    TEXT_GENERATION: "TEXT_GENERATION",
+    EMBEDDING: "EMBEDDING",
+    IMAGE_GENERATION: "IMAGE_GENERATION",
+    AUDIO_TRANSCRIPTION: "AUDIO_TRANSCRIPTION",
+    VIDEO_GENERATION: "VIDEO_GENERATION"
+} as const;
+
+export type PostApiV1Llms201TypeEnumKey = (typeof postApiV1Llms201TypeEnum)[keyof typeof postApiV1Llms201TypeEnum];
+
 /**
  * @description Default Response
 */
@@ -24,6 +34,10 @@ export type PostApiV1Llms201 = {
     */
     provider: string;
     config: any;
+    /**
+     * @type string
+    */
+    type: PostApiV1Llms201TypeEnumKey;
     maxLimits: any;
     currentLimits: any;
     /**
@@ -79,6 +93,16 @@ export type PostApiV1Llms500 = {
     error: string;
 };
 
+export const postApiV1LlmsMutationRequestTypeEnum = {
+    TEXT_GENERATION: "TEXT_GENERATION",
+    EMBEDDING: "EMBEDDING",
+    IMAGE_GENERATION: "IMAGE_GENERATION",
+    AUDIO_TRANSCRIPTION: "AUDIO_TRANSCRIPTION",
+    VIDEO_GENERATION: "VIDEO_GENERATION"
+} as const;
+
+export type PostApiV1LlmsMutationRequestTypeEnumKey = (typeof postApiV1LlmsMutationRequestTypeEnum)[keyof typeof postApiV1LlmsMutationRequestTypeEnum];
+
 export type PostApiV1LlmsMutationRequest = {
     /**
      * @minLength 1
@@ -88,6 +112,10 @@ export type PostApiV1LlmsMutationRequest = {
     provider: string;
     config: any;
     maxLimits: any;
+    /**
+     * @type string
+    */
+    type: PostApiV1LlmsMutationRequestTypeEnumKey;
     /**
      * @maxLength 255
      * @type string

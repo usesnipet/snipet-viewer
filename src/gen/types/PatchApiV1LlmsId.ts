@@ -11,6 +11,16 @@ export type PatchApiV1LlmsIdPathParams = {
     id: string;
 };
 
+export const patchApiV1LlmsId200TypeEnum = {
+    TEXT_GENERATION: "TEXT_GENERATION",
+    EMBEDDING: "EMBEDDING",
+    IMAGE_GENERATION: "IMAGE_GENERATION",
+    AUDIO_TRANSCRIPTION: "AUDIO_TRANSCRIPTION",
+    VIDEO_GENERATION: "VIDEO_GENERATION"
+} as const;
+
+export type PatchApiV1LlmsId200TypeEnumKey = (typeof patchApiV1LlmsId200TypeEnum)[keyof typeof patchApiV1LlmsId200TypeEnum];
+
 /**
  * @description Default Response
 */
@@ -31,6 +41,10 @@ export type PatchApiV1LlmsId200 = {
     */
     provider: string;
     config: any;
+    /**
+     * @type string
+    */
+    type: PatchApiV1LlmsId200TypeEnumKey;
     maxLimits: any;
     currentLimits: any;
     /**
@@ -96,6 +110,16 @@ export type PatchApiV1LlmsId500 = {
     error: string;
 };
 
+export const patchApiV1LlmsIdMutationRequestTypeEnum = {
+    TEXT_GENERATION: "TEXT_GENERATION",
+    EMBEDDING: "EMBEDDING",
+    IMAGE_GENERATION: "IMAGE_GENERATION",
+    AUDIO_TRANSCRIPTION: "AUDIO_TRANSCRIPTION",
+    VIDEO_GENERATION: "VIDEO_GENERATION"
+} as const;
+
+export type PatchApiV1LlmsIdMutationRequestTypeEnumKey = (typeof patchApiV1LlmsIdMutationRequestTypeEnum)[keyof typeof patchApiV1LlmsIdMutationRequestTypeEnum];
+
 export type PatchApiV1LlmsIdMutationRequest = {
     /**
      * @maxLength 255
@@ -111,6 +135,10 @@ export type PatchApiV1LlmsIdMutationRequest = {
     config?: any;
     maxLimits?: any;
     currentLimits?: any;
+    /**
+     * @type string | undefined
+    */
+    type?: PatchApiV1LlmsIdMutationRequestTypeEnumKey;
 };
 
 export type PatchApiV1LlmsIdMutationResponse = PatchApiV1LlmsId200;

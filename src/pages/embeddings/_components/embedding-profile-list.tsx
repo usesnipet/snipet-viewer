@@ -54,7 +54,7 @@ export function EmbeddingProfileList() {
 
   // NOTE: The generated OpenAPI types for this list endpoint are currently incorrect.
   // We type-assert to the app's local EmbeddingProfile interface used elsewhere.
-  const { data: rawProfiles, error: profilesError } = useGetApiV1EmbeddingProfilesSuspense();
+  const { data: rawProfiles, error: profilesError } = useGetApiV1EmbeddingProfilesSuspense({ includeLLM: true });
   const embeddingProfiles = rawProfiles as unknown as EmbeddingProfile[] | undefined;
 
   const { data: rawSources } = useGetApiV1KnowledgeSourcesSuspense();
@@ -150,17 +150,16 @@ export function EmbeddingProfileList() {
         id: "linkedSources",
         header: "Linked Sources",
         cell: ({ row }) => (
-          <span className="text-sm text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+          <Badge variant="outline">
             {linkedCounts[row.original.id] ?? 0} sources
-          </span>
+          </Badge>
         ),
       }),
-      columnHelper.accessor("llmId", {
+      columnHelper.display({
+        id: "llm",
         header: "LLM",
-        cell: ({ getValue }) => (
-          <span className="text-sm font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-            {getValue() ?? "—"}
-          </span>
+        cell: ({ row }) => (
+            row.original.llm.name ?? "—"
         ),
       }),
       columnHelper.accessor("createdAt", {

@@ -5,8 +5,6 @@ export type { GetApiV1KnowledgeBasesIdQueryKey } from "./useGetApiV1KnowledgeBas
 export type { GetApiV1KnowledgeBasesIdSourcesQueryKey } from "./useGetApiV1KnowledgeBasesIdSources.ts";
 export type { GetApiV1KnowledgeBasesIdSourcesSuspenseQueryKey } from "./useGetApiV1KnowledgeBasesIdSourcesSuspense.ts";
 export type { GetApiV1KnowledgeBasesIdSuspenseQueryKey } from "./useGetApiV1KnowledgeBasesIdSuspense.ts";
-export type { GetApiV1KnowledgeBasesIdWithSourcesQueryKey } from "./useGetApiV1KnowledgeBasesIdWithSources.ts";
-export type { GetApiV1KnowledgeBasesIdWithSourcesSuspenseQueryKey } from "./useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
 export type { GetApiV1KnowledgeBasesSuspenseQueryKey } from "./useGetApiV1KnowledgeBasesSuspense.ts";
 export type { PatchApiV1KnowledgeBasesIdMutationKey } from "./usePatchApiV1KnowledgeBasesId.ts";
 export type { PostApiV1KnowledgeBasesMutationKey } from "./usePostApiV1KnowledgeBases.ts";
@@ -32,12 +30,6 @@ export { useGetApiV1KnowledgeBasesIdSourcesSuspense } from "./useGetApiV1Knowled
 export { getApiV1KnowledgeBasesIdSuspenseQueryKey } from "./useGetApiV1KnowledgeBasesIdSuspense.ts";
 export { getApiV1KnowledgeBasesIdSuspenseQueryOptions } from "./useGetApiV1KnowledgeBasesIdSuspense.ts";
 export { useGetApiV1KnowledgeBasesIdSuspense } from "./useGetApiV1KnowledgeBasesIdSuspense.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesQueryKey } from "./useGetApiV1KnowledgeBasesIdWithSources.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesQueryOptions } from "./useGetApiV1KnowledgeBasesIdWithSources.ts";
-export { useGetApiV1KnowledgeBasesIdWithSources } from "./useGetApiV1KnowledgeBasesIdWithSources.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesSuspenseQueryKey } from "./useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesSuspenseQueryOptions } from "./useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
-export { useGetApiV1KnowledgeBasesIdWithSourcesSuspense } from "./useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
 export { getApiV1KnowledgeBasesSuspenseQueryKey } from "./useGetApiV1KnowledgeBasesSuspense.ts";
 export { getApiV1KnowledgeBasesSuspenseQueryOptions } from "./useGetApiV1KnowledgeBasesSuspense.ts";
 export { useGetApiV1KnowledgeBasesSuspense } from "./useGetApiV1KnowledgeBasesSuspense.ts";

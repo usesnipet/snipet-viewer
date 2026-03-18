@@ -4,7 +4,7 @@
 */
 
 import fetch from "@kubb/plugin-client/clients/axios";
-import type { GetApiV1EmbeddingProfilesIdQueryResponse, GetApiV1EmbeddingProfilesIdPathParams, GetApiV1EmbeddingProfilesId404, GetApiV1EmbeddingProfilesId500 } from "../../types/GetApiV1EmbeddingProfilesId.ts";
+import type { GetApiV1EmbeddingProfilesIdQueryResponse, GetApiV1EmbeddingProfilesIdPathParams, GetApiV1EmbeddingProfilesIdQueryParams, GetApiV1EmbeddingProfilesId404, GetApiV1EmbeddingProfilesId500 } from "../../types/GetApiV1EmbeddingProfilesId.ts";
 import type { Client, RequestConfig, ResponseErrorConfig } from "@kubb/plugin-client/clients/axios";
 
 function getGetApiV1EmbeddingProfilesIdUrl(id: GetApiV1EmbeddingProfilesIdPathParams["id"]) {
@@ -16,11 +16,11 @@ function getGetApiV1EmbeddingProfilesIdUrl(id: GetApiV1EmbeddingProfilesIdPathPa
  * @description Get an embedding profile by ID
  * {@link /api/v1/embedding-profiles/:id}
  */
-export async function getApiV1EmbeddingProfilesId(id: GetApiV1EmbeddingProfilesIdPathParams["id"], config: Partial<RequestConfig> & { client?: Client } = {}) {
+export async function getApiV1EmbeddingProfilesId(id: GetApiV1EmbeddingProfilesIdPathParams["id"], params?: GetApiV1EmbeddingProfilesIdQueryParams, config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config
 
 
 
-  const res = await request<GetApiV1EmbeddingProfilesIdQueryResponse, ResponseErrorConfig<GetApiV1EmbeddingProfilesId404 | GetApiV1EmbeddingProfilesId500>, unknown>({ method : "GET", url : getGetApiV1EmbeddingProfilesIdUrl(id).url.toString(), ... requestConfig })
+  const res = await request<GetApiV1EmbeddingProfilesIdQueryResponse, ResponseErrorConfig<GetApiV1EmbeddingProfilesId404 | GetApiV1EmbeddingProfilesId500>, unknown>({ method : "GET", url : getGetApiV1EmbeddingProfilesIdUrl(id).url.toString(), params, ... requestConfig })
   return res.data
 }

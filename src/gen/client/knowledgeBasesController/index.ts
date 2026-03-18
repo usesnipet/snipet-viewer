@@ -3,7 +3,6 @@ export { deleteApiV1KnowledgeBasesIdSourcesSourceid } from "./deleteApiV1Knowled
 export { getApiV1KnowledgeBases } from "./getApiV1KnowledgeBases.ts";
 export { getApiV1KnowledgeBasesId } from "./getApiV1KnowledgeBasesId.ts";
 export { getApiV1KnowledgeBasesIdSources } from "./getApiV1KnowledgeBasesIdSources.ts";
-export { getApiV1KnowledgeBasesIdWithSources } from "./getApiV1KnowledgeBasesIdWithSources.ts";
 export { patchApiV1KnowledgeBasesId } from "./patchApiV1KnowledgeBasesId.ts";
 export { postApiV1KnowledgeBases } from "./postApiV1KnowledgeBases.ts";
 export { postApiV1KnowledgeBasesIdSourcesSourceid } from "./postApiV1KnowledgeBasesIdSourcesSourceid.ts";

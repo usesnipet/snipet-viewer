@@ -1,39 +1,47 @@
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { useDialog } from '@/hooks/use-dialog';
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useDialog } from "@/hooks/use-dialog";
 
-import { Reranker } from '@/types';
-import { useForm, useWatch } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import z from 'zod';
-import { getApiV1RerankersQueryKey, useGetApiV1Rerankers, useGetApiV1RerankersSchema, usePatchApiV1RerankersId, usePostApiV1Rerankers } from '@/gen';
-import { FormInput } from '@/components/form/input';
-import { FormSelect } from '@/components/form/select';
-import { SchemaForm } from '@/components/schema-form';
-import { Form } from '@/components/ui/form';
-import { useToast } from '@/hooks/use-toast';
-import { DialogType } from '.';
-import { useQueryClient } from '@tanstack/react-query';
+import { Reranker } from "@/types";
+import { useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+import {
+  getApiV1RerankersQueryKey,
+  useGetApiV1RerankersSchema,
+  usePatchApiV1RerankersId,
+  usePostApiV1Rerankers,
+} from "@/gen";
+import { FormInput } from "@/components/form/input";
+import { FormSelect } from "@/components/form/select";
+import { Form } from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
+import { DialogType } from ".";
+import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
 
 export type CreateOrUpdateRerankerDialogProps = {
   reranker?: Reranker;
 };
-const baseSchema = z.object({
+const rerankerSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
   type: z.string().min(1, "Type is required"),
+  config: z.unknown(),
 });
 
-type BaseValues = z.infer<typeof baseSchema>;
+type RerankerValues = z.infer<typeof rerankerSchema>;
 
 export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateRerankerDialogProps) => {
   const { toast } = useToast();
-  const { closeDialog } = useDialog();
+  const { closeDialog, openDialog } = useDialog();
 
   const isEditing = !!reranker;
-  const form = useForm<BaseValues>({
-    resolver: zodResolver(baseSchema),
+  const form = useForm<RerankerValues>({
+    resolver: zodResolver(rerankerSchema),
     defaultValues: {
-      name: reranker?.name || "",
-      type: reranker?.type || "",
+      name: reranker?.name ?? "",
+      type: reranker?.type ?? "",
+      config: reranker?.config ?? {},
     },
   });
 
@@ -44,39 +52,36 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
   const { mutate: createReranker } = usePostApiV1Rerankers();
   const { mutate: updateReranker } = usePatchApiV1RerankersId();
 
-
   const selectedType = useWatch({ control: form.control, name: "type" });
-  const currentSchema = schemas.find(s => s.targetId === selectedType)?.schema;
+  const currentSchema = schemas.find((s) => s.targetId === selectedType)?.schema;
 
-  const onSubmit = async (baseValues: BaseValues, configValues: any) => {
+  const onSubmit = async (values: RerankerValues) => {
+    const data = values;
 
-    const finalData = {
-      ...baseValues,
-      config: configValues,
-    };
-
-    if (isEditing) {
-      updateReranker({ id: reranker?.id, data: finalData }, {
-        onSuccess: () => {
-          toast({ title: "Re-ranker updated successfully" });
-          queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
-          closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
-        },
-        onError: () => {
-          toast({ title: "Failed to update re-ranker", variant: "destructive" });
-        },
-      });
+    if (isEditing && reranker) {
+      updateReranker(
+        { id: reranker.id, data },
+        {
+          onSuccess: () => {
+            toast({ title: "Re-ranker updated successfully" });
+            queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+            closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
+          },
+          onError: () => toast({ title: "Failed to update re-ranker", variant: "destructive" }),
+        }
+      );
     } else {
-      createReranker({ data: finalData }, {
-        onSuccess: () => {
-          toast({ title: "Re-ranker created successfully" });
-          queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
-          closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
-        },
-        onError: () => {
-          toast({ title: "Failed to create re-ranker", variant: "destructive" });
-        },
-      });
+      createReranker(
+        { data },
+        {
+          onSuccess: () => {
+            toast({ title: "Re-ranker created successfully" });
+            queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+            closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
+          },
+          onError: () => toast({ title: "Failed to create re-ranker", variant: "destructive" }),
+        }
+      );
     }
   };
 
@@ -92,27 +97,40 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormInput name="name" label="Re-ranker Name" />
-            <FormSelect
-              label="Type"
-              options={schemas.map(s => ({ label: s.targetId, value: s.targetId }))}
-              name='type'
-            />
-          </div>
+        <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <FormInput name="name" label="Re-ranker Name" />
+          <FormSelect
+            label="Type"
+            options={schemas.map((s) => ({ label: s.targetId, value: s.targetId }))}
+            name="type"
+            fieldclassname="flex-1"
+            action={{
+              icon: <Settings />,
+              size: "icon-lg",
+              variant: "outline",
+              disabled: !currentSchema,
+              onClick: () => {
+                if (!currentSchema) return;
+                openDialog({
+                  type: DialogType.SCHEMA_FORM,
+                  props: {
+                    title: `Edit ${selectedType} configuration`,
+                    description: `Configure the ${selectedType} reranker.`,
+                    schema: currentSchema,
+                    formData: (reranker as any)?.config ?? {},
+                    submitLabel: "Save",
+                    onSubmit: (configData: any) => {
+                      form.setValue("config", configData);
+                      closeDialog(DialogType.SCHEMA_FORM);
+                    },
+                  },
+                });
+              },
+            }}
+          />
 
-          {currentSchema && (
-            <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
-              <SchemaForm
-                schema={currentSchema}
-                formData={reranker?.config}
-                onSubmit={(configData) => form.handleSubmit((baseData) => onSubmit(baseData, configData))()}
-                submitLabel={reranker ? "Update Re-ranker" : "Create Re-ranker"}
-              />
-            </div>
-          )}
-        </div>
+          <Button type="submit">{isEditing ? "Update Re-ranker" : "Create Re-ranker"}</Button>
+        </form>
       </Form>
     </DialogContent>
   );

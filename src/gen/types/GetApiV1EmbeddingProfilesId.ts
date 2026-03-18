@@ -11,6 +11,13 @@ export type GetApiV1EmbeddingProfilesIdPathParams = {
     id: string;
 };
 
+export type GetApiV1EmbeddingProfilesIdQueryParams = {
+    /**
+     * @type boolean | undefined
+    */
+    includeLLM?: boolean;
+};
+
 export const getApiV1EmbeddingProfilesId200StatusEnum = {
     ACTIVE: "ACTIVE",
     DEPRECATED: "DEPRECATED"
@@ -112,5 +119,6 @@ export type GetApiV1EmbeddingProfilesIdQueryResponse = GetApiV1EmbeddingProfiles
 export type GetApiV1EmbeddingProfilesIdQuery = {
     Response: GetApiV1EmbeddingProfilesId200;
     PathParams: GetApiV1EmbeddingProfilesIdPathParams;
+    QueryParams: GetApiV1EmbeddingProfilesIdQueryParams;
     Errors: GetApiV1EmbeddingProfilesId404 | GetApiV1EmbeddingProfilesId500;
 };

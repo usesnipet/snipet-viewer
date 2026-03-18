@@ -4,6 +4,16 @@
 */
 
 
+export const getApiV1LlmsQueryParamsTypeEnum = {
+    TEXT_GENERATION: "TEXT_GENERATION",
+    EMBEDDING: "EMBEDDING",
+    IMAGE_GENERATION: "IMAGE_GENERATION",
+    AUDIO_TRANSCRIPTION: "AUDIO_TRANSCRIPTION",
+    VIDEO_GENERATION: "VIDEO_GENERATION"
+} as const;
+
+export type GetApiV1LlmsQueryParamsTypeEnumKey = (typeof getApiV1LlmsQueryParamsTypeEnum)[keyof typeof getApiV1LlmsQueryParamsTypeEnum];
+
 export type GetApiV1LlmsQueryParams = {
     /**
      * @type number | undefined
@@ -21,39 +31,26 @@ export type GetApiV1LlmsQueryParams = {
      * @type string | undefined
     */
     provider?: string;
+    /**
+     * @type string | undefined
+    */
+    type?: GetApiV1LlmsQueryParamsTypeEnumKey;
 };
+
+export const getApiV1Llms200TypeEnum = {
+    TEXT_GENERATION: "TEXT_GENERATION",
+    EMBEDDING: "EMBEDDING",
+    IMAGE_GENERATION: "IMAGE_GENERATION",
+    AUDIO_TRANSCRIPTION: "AUDIO_TRANSCRIPTION",
+    VIDEO_GENERATION: "VIDEO_GENERATION"
+} as const;
+
+export type GetApiV1Llms200TypeEnumKey = (typeof getApiV1Llms200TypeEnum)[keyof typeof getApiV1Llms200TypeEnum];
 
 /**
  * @description Default Response
 */
-export type GetApiV1Llms200 = {
-    /**
-     * @type string, uuid
-    */
-    id: string;
-    /**
-     * @maxLength 255
-     * @type string
-    */
-    name: string | null;
-    /**
-     * @minLength 1
-     * @maxLength 255
-     * @type string
-    */
-    provider: string;
-    config: any;
-    maxLimits: any;
-    currentLimits: any;
-    /**
-     * @type string, date-time
-    */
-    createdAt: string;
-    /**
-     * @type string, date-time
-    */
-    updatedAt: string;
-}[];
+export type GetApiV1Llms200 = GetApiV1Llms200TypeEnumKey[];
 
 /**
  * @description Default Response

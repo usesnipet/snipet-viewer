@@ -26,7 +26,6 @@ export { deleteApiV1KnowledgeBasesIdSourcesSourceid } from "./knowledgeBasesCont
 export { getApiV1KnowledgeBases } from "./knowledgeBasesController/getApiV1KnowledgeBases.ts";
 export { getApiV1KnowledgeBasesId } from "./knowledgeBasesController/getApiV1KnowledgeBasesId.ts";
 export { getApiV1KnowledgeBasesIdSources } from "./knowledgeBasesController/getApiV1KnowledgeBasesIdSources.ts";
-export { getApiV1KnowledgeBasesIdWithSources } from "./knowledgeBasesController/getApiV1KnowledgeBasesIdWithSources.ts";
 export { patchApiV1KnowledgeBasesId } from "./knowledgeBasesController/patchApiV1KnowledgeBasesId.ts";
 export { postApiV1KnowledgeBases } from "./knowledgeBasesController/postApiV1KnowledgeBases.ts";
 export { postApiV1KnowledgeBasesIdSourcesSourceid } from "./knowledgeBasesController/postApiV1KnowledgeBasesIdSourcesSourceid.ts";

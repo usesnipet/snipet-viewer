@@ -39,8 +39,6 @@ export type { GetApiV1KnowledgeBasesIdQueryKey } from "./knowledgeBasesControlle
 export type { GetApiV1KnowledgeBasesIdSourcesQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdSources.ts";
 export type { GetApiV1KnowledgeBasesIdSourcesSuspenseQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdSourcesSuspense.ts";
 export type { GetApiV1KnowledgeBasesIdSuspenseQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdSuspense.ts";
-export type { GetApiV1KnowledgeBasesIdWithSourcesQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSources.ts";
-export type { GetApiV1KnowledgeBasesIdWithSourcesSuspenseQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
 export type { GetApiV1KnowledgeBasesSuspenseQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesSuspense.ts";
 export type { PatchApiV1KnowledgeBasesIdMutationKey } from "./knowledgeBasesController/usePatchApiV1KnowledgeBasesId.ts";
 export type { PostApiV1KnowledgeBasesMutationKey } from "./knowledgeBasesController/usePostApiV1KnowledgeBases.ts";
@@ -196,12 +194,6 @@ export { useGetApiV1KnowledgeBasesIdSourcesSuspense } from "./knowledgeBasesCont
 export { getApiV1KnowledgeBasesIdSuspenseQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdSuspense.ts";
 export { getApiV1KnowledgeBasesIdSuspenseQueryOptions } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdSuspense.ts";
 export { useGetApiV1KnowledgeBasesIdSuspense } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdSuspense.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSources.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesQueryOptions } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSources.ts";
-export { useGetApiV1KnowledgeBasesIdWithSources } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSources.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesSuspenseQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
-export { getApiV1KnowledgeBasesIdWithSourcesSuspenseQueryOptions } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
-export { useGetApiV1KnowledgeBasesIdWithSourcesSuspense } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesIdWithSourcesSuspense.ts";
 export { getApiV1KnowledgeBasesSuspenseQueryKey } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesSuspense.ts";
 export { getApiV1KnowledgeBasesSuspenseQueryOptions } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesSuspense.ts";
 export { useGetApiV1KnowledgeBasesSuspense } from "./knowledgeBasesController/useGetApiV1KnowledgeBasesSuspense.ts";
