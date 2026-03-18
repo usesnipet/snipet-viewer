@@ -1,8 +1,8 @@
-export { deleteApiV1KnowledgeBasesId } from "./deleteApiV1KnowledgeBasesId.ts";
-export { deleteApiV1KnowledgeBasesIdSourcesSourceid } from "./deleteApiV1KnowledgeBasesIdSourcesSourceid.ts";
-export { getApiV1KnowledgeBases } from "./getApiV1KnowledgeBases.ts";
-export { getApiV1KnowledgeBasesId } from "./getApiV1KnowledgeBasesId.ts";
-export { getApiV1KnowledgeBasesIdSources } from "./getApiV1KnowledgeBasesIdSources.ts";
-export { patchApiV1KnowledgeBasesId } from "./patchApiV1KnowledgeBasesId.ts";
-export { postApiV1KnowledgeBases } from "./postApiV1KnowledgeBases.ts";
-export { postApiV1KnowledgeBasesIdSourcesSourceid } from "./postApiV1KnowledgeBasesIdSourcesSourceid.ts";
+export { deleteApiKnowledgeBasesId } from "./deleteApiKnowledgeBasesId.ts";
+export { deleteApiKnowledgeBasesIdSourcesSourceid } from "./deleteApiKnowledgeBasesIdSourcesSourceid.ts";
+export { getApiKnowledgeBases } from "./getApiKnowledgeBases.ts";
+export { getApiKnowledgeBasesId } from "./getApiKnowledgeBasesId.ts";
+export { getApiKnowledgeBasesIdSources } from "./getApiKnowledgeBasesIdSources.ts";
+export { patchApiKnowledgeBasesId } from "./patchApiKnowledgeBasesId.ts";
+export { postApiKnowledgeBases } from "./postApiKnowledgeBases.ts";
+export { postApiKnowledgeBasesIdSourcesSourceid } from "./postApiKnowledgeBasesIdSourcesSourceid.ts";

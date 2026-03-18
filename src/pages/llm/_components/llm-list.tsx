@@ -4,7 +4,7 @@ import { formatDate } from "@/lib/utils";
 import {
   getApiV1LlmsQueryKey,
   useDeleteApiV1LlmsId,
-  useGetApiV1LlmsSuspense,
+  useGetApiV1Llms,
 } from "@/gen";
 import { DialogType } from "@/dialogs";
 import { useDialog } from "@/hooks/use-dialog";
@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 import { useCallback, useMemo } from "react";
-import { LLM } from "@/types";
+import { LLM, LLMType } from "@/types";
 
 const columnHelper = createColumnHelper<LLM>();
 
@@ -47,17 +47,10 @@ function LLMRowActions({
 
 export function LLMList() {
   const queryClient = useQueryClient();
-  const { data: llms, error } = useGetApiV1LlmsSuspense();
+  const { data: llms, error } = useGetApiV1Llms();
   const { mutate: deleteLLM } = useDeleteApiV1LlmsId();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
-
-  const handleCreate = useCallback(() => {
-    openDialog({
-      type: DialogType.CREATE_OR_UPDATE_LLM,
-      props: { llm: undefined },
-    });
-  }, [openDialog]);
 
   const handleEdit = useCallback(
     (llm: LLM) => {

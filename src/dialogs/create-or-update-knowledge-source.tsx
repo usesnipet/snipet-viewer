@@ -70,7 +70,7 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
     data: selectedEmbeddingProfile,
     isLoading: isEmbeddingProfileLoading,
     isError: isEmbeddingProfileError,
-  } = useGetApiV1EmbeddingProfilesId(embeddingProfileId ?? "", {
+  } = useGetApiV1EmbeddingProfilesId(embeddingProfileId ?? "", {}, {
     query: { enabled: !!embeddingProfileId },
   });
   const canEditEmbeddingProfile =
@@ -78,6 +78,14 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
   const { data: embeddingProfilesRaw } = useGetApiV1EmbeddingProfilesSuspense();
   const embeddingProfiles =
     (embeddingProfilesRaw as unknown as EmbeddingProfile[]) ?? [];
+  const ADD_NEW_EMBEDDING_PROFILE_VALUE = "__add_new_embedding_profile__";
+  const embeddingProfileOptions = [
+    ...embeddingProfiles.map((p) => ({
+      label: p.name,
+      value: p.id,
+    })),
+    { label: "Add new embedding profile...", value: ADD_NEW_EMBEDDING_PROFILE_VALUE },
+  ];
 
   const { mutate: createSource } = usePostApiV1KnowledgeSources();
   const { mutate: updateSource } = usePatchApiV1KnowledgeSourcesId();
@@ -217,10 +225,15 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
             <FormSelect
               label="Embedding Profile"
               name="embeddingProfileId"
-              options={embeddingProfiles.map((p) => ({
-                label: p.name,
-                value: p.id,
-              }))}
+              options={embeddingProfileOptions}
+              onValueChange={(value) => {
+                if (value !== ADD_NEW_EMBEDDING_PROFILE_VALUE) return undefined;
+                openDialog({
+                  type: DialogType.CREATE_OR_UPDATE_EMBEDDING_PROFILE,
+                  props: {},
+                });
+                return null;
+              }}
               action={{
                 icon: <Settings />,
                 size: "icon-lg",

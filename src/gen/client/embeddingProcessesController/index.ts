@@ -1,5 +1,5 @@
-export { deleteApiV1EmbeddingProcessesId } from "./deleteApiV1EmbeddingProcessesId.ts";
-export { getApiV1EmbeddingProcesses } from "./getApiV1EmbeddingProcesses.ts";
-export { getApiV1EmbeddingProcessesId } from "./getApiV1EmbeddingProcessesId.ts";
-export { patchApiV1EmbeddingProcessesId } from "./patchApiV1EmbeddingProcessesId.ts";
-export { postApiV1EmbeddingProcesses } from "./postApiV1EmbeddingProcesses.ts";
+export { deleteApiEmbeddingProcessesId } from "./deleteApiEmbeddingProcessesId.ts";
+export { getApiEmbeddingProcesses } from "./getApiEmbeddingProcesses.ts";
+export { getApiEmbeddingProcessesId } from "./getApiEmbeddingProcessesId.ts";
+export { patchApiEmbeddingProcessesId } from "./patchApiEmbeddingProcessesId.ts";
+export { postApiEmbeddingProcesses } from "./postApiEmbeddingProcesses.ts";

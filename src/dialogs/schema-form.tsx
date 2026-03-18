@@ -7,6 +7,7 @@ import {
 import { useDialog } from "@/hooks/use-dialog";
 import { SchemaForm, SchemaFormProps } from "@/components/schema-form";
 import { DialogType } from ".";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export type SchemaFormDialogProps = Omit<SchemaFormProps, "onCancel" | "cancelLabel"> & {
   title: string;
@@ -23,7 +24,9 @@ export const SchemaFormDialog = ({title, description, ...props}: SchemaFormDialo
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
-      <SchemaForm {...props} onCancel={() => closeDialog(DialogType.SCHEMA_FORM)} />
+      <ScrollArea className="max-h-[500px] p-2 pr-4">
+        <SchemaForm {...props} onCancel={() => closeDialog(DialogType.SCHEMA_FORM)} />
+      </ScrollArea>
     </DialogContent>
   );
 };

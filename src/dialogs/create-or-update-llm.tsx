@@ -20,7 +20,7 @@ import { Form } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { DialogType } from ".";
 import { useQueryClient } from "@tanstack/react-query";
-import { LLM } from "@/types";
+import { LLM, LLMType } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
 
@@ -30,6 +30,7 @@ export type CreateOrUpdateLLMDialogProps = {
 
 const llmSchema = z.object({
   name: z.string().max(255).trim().optional(),
+  type: z.enum(LLMType),
   provider: z.string().min(1, "Provider is required"),
   config: z.unknown(),
   maxLimits: z.unknown(),
@@ -46,6 +47,7 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
     resolver: zodResolver(llmSchema),
     defaultValues: {
       name: llm?.name ?? "",
+      type: llm?.type ?? LLMType.TEXT_GENERATION,
       provider: llm?.provider ?? "",
       config: llm?.config ?? {},
       maxLimits: llm?.maxLimits ?? {},
@@ -102,6 +104,11 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
       <Form {...form}>
         <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
           <FormInput name="name" label="LLM Name" />
+          <FormSelect
+            name="type"
+            label="LLM Type"
+            options={Object.values(LLMType).map((t) => ({ label: t, value: t }))}
+          />
           <FormSelect
             label="Provider"
             name="provider"

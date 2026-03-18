@@ -1,6 +1,6 @@
-export { deleteApiV1LlmsId } from "./deleteApiV1LlmsId.ts";
-export { getApiV1Llms } from "./getApiV1Llms.ts";
-export { getApiV1LlmsId } from "./getApiV1LlmsId.ts";
-export { getApiV1LlmsSchema } from "./getApiV1LlmsSchema.ts";
-export { patchApiV1LlmsId } from "./patchApiV1LlmsId.ts";
-export { postApiV1Llms } from "./postApiV1Llms.ts";
+export { deleteApiLlmsId } from "./deleteApiLlmsId.ts";
+export { getApiLlms } from "./getApiLlms.ts";
+export { getApiLlmsId } from "./getApiLlmsId.ts";
+export { getApiLlmsSchema } from "./getApiLlmsSchema.ts";
+export { patchApiLlmsId } from "./patchApiLlmsId.ts";
+export { postApiLlms } from "./postApiLlms.ts";

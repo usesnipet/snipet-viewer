@@ -1,9 +1,10 @@
-export type LLMType =
-  | 'TEXT_GENERATION'
-  | 'EMBEDDING'
-  | 'IMAGE_GENERATION'
-  | 'AUDIO_TRANSCRIPTION'
-  | 'VIDEO_GENERATION';
+export enum LLMType {
+  TEXT_GENERATION= 'TEXT_GENERATION',
+  EMBEDDING= 'EMBEDDING',
+  IMAGE_GENERATION= 'IMAGE_GENERATION',
+  AUDIO_TRANSCRIPTION= 'AUDIO_TRANSCRIPTION',
+  VIDEO_GENERATION= 'VIDEO_GENERATION'
+}
 
 export type LLMProvider = string;
 export type LLMPurpose = 'COMPLETION' | 'EMBEDDING';
@@ -24,6 +25,7 @@ export interface LLM {
   id: string;
   name?: string | null;
   provider: string;
+  type: LLMType;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

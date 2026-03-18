@@ -11,6 +11,13 @@ type Props = {
   fieldclassname?: string;
   options: { label: string; value: string }[];
   placeholder?: string;
+  /**
+   * Intercepts the value change of the select.
+   * - returns `null` to prevent the value update in the react-hook-form
+   * - returns `string` to substitute the sent value
+   * - returns `undefined` to use the original value
+   */
+  onValueChange?: (value: string) => string | null | undefined;
   action?: {
     label?: string;
     icon?: React.ReactNode;
@@ -51,7 +58,21 @@ export const FormSelect = (props: Props) => {
           {props.label && <FormLabel>{props.label}</FormLabel>}
           <FormControl>
             <div className="flex gap-2 items-end">
-              <Select disabled={isLoading} value={field.value} onValueChange={field.onChange}>
+              <Select
+                disabled={isLoading}
+                value={field.value}
+                onValueChange={(nextValue) => {
+                  const intercepted = props.onValueChange?.(nextValue);
+
+                  if (intercepted === null) return;
+                  if (typeof intercepted === "string") {
+                    field.onChange(intercepted);
+                    return;
+                  }
+
+                  field.onChange(nextValue);
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder={props.placeholder ?? "Select an option"} />
                 </SelectTrigger>
