@@ -3,7 +3,7 @@ import { Edit2, Trash2, Layers } from "lucide-react";
 import { formatDate } from "../../../lib/utils";
 import {
   getApiRerankersQueryKey,
-  useDeleteApiRerankersId,
+  useDeleteRerankersId,
   useGetApiRerankersSuspense,
 } from "@/hooks/api";
 import { DialogType } from "@/dialogs";
@@ -48,7 +48,7 @@ function RerankerRowActions({
 export function RerankerList() {
   const queryClient = useQueryClient();
   const { data: rerankers, error } = useGetApiRerankersSuspense();
-  const { mutate: deleteReranker } = useDeleteApiRerankersId();
+  const { mutate: deleteReranker } = useDeleteRerankersId();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
 

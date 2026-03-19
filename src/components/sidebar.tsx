@@ -33,7 +33,7 @@ import {
   SidebarMenuSubItem,
   SidebarSeparator,
 } from "./ui/sidebar";
-import { useGetApiVersion } from "@/hooks/api";
+import { useGetVersion } from "@/hooks/api";
 
 const NAV_ITEMS = [
   {
@@ -54,7 +54,7 @@ export function AppSidebar() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const [expandedItems, setExpandedItems] = React.useState<string[]>(["Knowledge"]);
-  const { data: { version } = { version: "..." } } = useGetApiVersion();
+  const { data: { version } = { version: "..." } } = useGetVersion();
 
   const toggleExpand = (label: string) => {
     setExpandedItems((prev) =>

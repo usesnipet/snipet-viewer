@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/lib/utils";
 import type { EmbeddingProfile, KnowledgeSource } from "@/types";
 import {
-  getApiEmbeddingProfilesSuspenseQueryKey,
+  getEmbeddingProfilesQueryKey,
   useDeleteApiEmbeddingProfilesId,
   useGetApiEmbeddingProfilesSuspense,
   useGetApiKnowledgeSourcesSuspense,
@@ -98,7 +98,7 @@ export function EmbeddingProfileList() {
                   onSuccess: () => {
                     toast({ title: "Embedding profile deleted successfully" });
                     queryClient.invalidateQueries({
-                      queryKey: getApiEmbeddingProfilesSuspenseQueryKey(),
+                      queryKey: getEmbeddingProfilesQueryKey(),
                     });
                     closeDialog(DialogType.CONFIRM);
                   },

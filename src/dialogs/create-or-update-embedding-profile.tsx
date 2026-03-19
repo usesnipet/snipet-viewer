@@ -18,7 +18,7 @@ import z from "zod";
 
 import type { EmbeddingProfile, LLM } from "@/types";
 import {
-  getApiEmbeddingProfilesSuspenseQueryKey,
+  getEmbeddingProfilesQueryKey,
   useGetApiEmbeddingProfilesSplitterSchema, useGetApiLlmsSuspense,
   usePatchApiEmbeddingProfilesId,
   usePostApiEmbeddingProfiles
@@ -122,7 +122,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
           onSuccess: () => {
             toast({ title: "Embedding profile updated successfully" });
             queryClient.invalidateQueries({
-              queryKey: getApiEmbeddingProfilesSuspenseQueryKey(),
+              queryKey: getEmbeddingProfilesQueryKey(),
             });
             closeDialog(DialogType.CREATE_OR_UPDATE_EMBEDDING_PROFILE);
           },
@@ -138,7 +138,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
         onSuccess: () => {
           toast({ title: "Embedding profile created successfully" });
           queryClient.invalidateQueries({
-              queryKey: getApiEmbeddingProfilesSuspenseQueryKey(),
+              queryKey: getEmbeddingProfilesQueryKey(),
           });
           closeDialog(DialogType.CREATE_OR_UPDATE_EMBEDDING_PROFILE);
         },
