@@ -9,10 +9,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import {
-  getApiV1KnowledgeBasesQueryKey,
-  usePatchApiV1KnowledgeBasesId,
-  usePostApiV1KnowledgeBases,
-} from "@/gen";
+  getApiKnowledgeBasesQueryKey,
+  usePatchApiKnowledgeBasesId,
+  usePostApiKnowledgeBases,
+} from "@/hooks/api";
 import { FormInput } from "@/components/form/input";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -49,8 +49,8 @@ export const CreateOrUpdateKnowledgeBaseDialog = ({
     },
   });
 
-  const { mutate: createBase } = usePostApiV1KnowledgeBases();
-  const { mutate: updateBase } = usePatchApiV1KnowledgeBasesId();
+  const { mutate: createBase } = usePostApiKnowledgeBases();
+  const { mutate: updateBase } = usePatchApiKnowledgeBasesId();
 
   const onSubmit = (values: BaseValues) => {
     const description =
@@ -64,7 +64,7 @@ export const CreateOrUpdateKnowledgeBaseDialog = ({
         {
           onSuccess: () => {
             toast({ title: "Knowledge Base updated successfully" });
-            queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeBasesQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiKnowledgeBasesQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_BASE);
           },
           onError: () => {
@@ -83,7 +83,7 @@ export const CreateOrUpdateKnowledgeBaseDialog = ({
       {
         onSuccess: () => {
           toast({ title: "Knowledge Base created successfully" });
-          queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeBasesQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getApiKnowledgeBasesQueryKey() });
           closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_BASE);
         },
         onError: () => {

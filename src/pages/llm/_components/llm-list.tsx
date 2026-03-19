@@ -1,11 +1,11 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { Plus, Edit2, Trash2, Cpu } from "lucide-react";
+import { Edit2, Trash2, Cpu } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import {
-  getApiV1LlmsQueryKey,
-  useDeleteApiV1LlmsId,
-  useGetApiV1Llms,
-} from "@/gen";
+  getApiLlmsQueryKey,
+  useDeleteApiLlmsId,
+  useGetApiLlms,
+} from "@/hooks/api";
 import { DialogType } from "@/dialogs";
 import { useDialog } from "@/hooks/use-dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 import { useCallback, useMemo } from "react";
-import { LLM, LLMType } from "@/types";
+import { LLM } from "@/types";
 
 const columnHelper = createColumnHelper<LLM>();
 
@@ -47,8 +47,8 @@ function LLMRowActions({
 
 export function LLMList() {
   const queryClient = useQueryClient();
-  const { data: llms, error } = useGetApiV1Llms();
-  const { mutate: deleteLLM } = useDeleteApiV1LlmsId();
+  const { data: llms, error } = useGetApiLlms();
+  const { mutate: deleteLLM } = useDeleteApiLlmsId();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
 
@@ -77,7 +77,7 @@ export function LLMList() {
                 {
                   onSuccess: () => {
                     toast({ title: "LLM deleted successfully" });
-                    queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
+                    queryClient.invalidateQueries({ queryKey: getApiLlmsQueryKey() });
                     closeDialog(DialogType.CONFIRM);
                   },
                   onError: () => {

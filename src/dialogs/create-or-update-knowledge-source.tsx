@@ -9,13 +9,13 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import {
-  getApiV1KnowledgeSourcesQueryKey,
-  usePatchApiV1KnowledgeSourcesId,
-  usePostApiV1KnowledgeSources,
-  useGetApiV1EmbeddingProfilesSuspense,
-  useGetApiV1KnowledgeSourcesSchema,
-  useGetApiV1EmbeddingProfilesId,
-} from "@/gen";
+  getApiKnowledgeSourcesQueryKey,
+  usePatchApiKnowledgeSourcesId,
+  usePostApiKnowledgeSources,
+  useGetApiEmbeddingProfilesSuspense,
+  useGetApiKnowledgeSourcesSchema,
+  useGetApiEmbeddingProfilesId,
+} from "@/hooks/api";
 import { FormInput } from "@/components/form/input";
 import { FormSelect } from "@/components/form/select";
 import { Form } from "@/components/ui/form";
@@ -64,18 +64,18 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
     },
   });
 
-  const { data: schemas = [] } = useGetApiV1KnowledgeSourcesSchema();
+  const { data: schemas = [] } = useGetApiKnowledgeSourcesSchema();
   const embeddingProfileId = form.watch("embeddingProfileId");
   const {
     data: selectedEmbeddingProfile,
     isLoading: isEmbeddingProfileLoading,
     isError: isEmbeddingProfileError,
-  } = useGetApiV1EmbeddingProfilesId(embeddingProfileId ?? "", {}, {
+  } = useGetApiEmbeddingProfilesId(embeddingProfileId ?? "", {}, {
     query: { enabled: !!embeddingProfileId },
   });
   const canEditEmbeddingProfile =
     !!embeddingProfileId && !isEmbeddingProfileLoading && !isEmbeddingProfileError && !!selectedEmbeddingProfile;
-  const { data: embeddingProfilesRaw } = useGetApiV1EmbeddingProfilesSuspense();
+  const { data: embeddingProfilesRaw } = useGetApiEmbeddingProfilesSuspense();
   const embeddingProfiles =
     (embeddingProfilesRaw as unknown as EmbeddingProfile[]) ?? [];
   const ADD_NEW_EMBEDDING_PROFILE_VALUE = "__add_new_embedding_profile__";
@@ -87,8 +87,8 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
     { label: "Add new embedding profile...", value: ADD_NEW_EMBEDDING_PROFILE_VALUE },
   ];
 
-  const { mutate: createSource } = usePostApiV1KnowledgeSources();
-  const { mutate: updateSource } = usePatchApiV1KnowledgeSourcesId();
+  const { mutate: createSource } = usePostApiKnowledgeSources();
+  const { mutate: updateSource } = usePatchApiKnowledgeSourcesId();
 
   const selectedType = useWatch({ control: form.control, name: "type" });
   const currentSchema = schemas.find((s) => s.targetId === selectedType)?.schema ?? null;
@@ -116,7 +116,7 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
         {
           onSuccess: () => {
             toast({ title: "Knowledge Source updated successfully" });
-            queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeSourcesQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiKnowledgeSourcesQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_SOURCE);
           },
           onError: () => {
@@ -152,7 +152,7 @@ export const CreateOrUpdateKnowledgeSourceDialog = ({
       {
         onSuccess: () => {
           toast({ title: "Knowledge Source created successfully" });
-          queryClient.invalidateQueries({ queryKey: getApiV1KnowledgeSourcesQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiKnowledgeSourcesQueryKey() });
           closeDialog(DialogType.CREATE_OR_UPDATE_KNOWLEDGE_SOURCE);
         },
         onError: () => {

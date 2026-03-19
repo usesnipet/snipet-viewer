@@ -33,10 +33,9 @@ import {
   SidebarMenuSubItem,
   SidebarSeparator,
 } from "./ui/sidebar";
-import { useGetApiVersion } from "@/gen";
+import { useGetApiVersion } from "@/hooks/api";
 
 const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   {
     icon: Database,
     label: "Knowledge",
@@ -49,9 +48,6 @@ const NAV_ITEMS = [
   { icon: Cpu, label: "LLMs", path: "/llms" },
   { icon: Filter, label: "Re-rankers", path: "/rerankers" },
   { icon: Layers, label: "Embeddings", path: "/embeddings" },
-  { icon: BarChart3, label: "Observability", path: "/observability" },
-  { icon: ShieldCheck, label: "Security", path: "/security" },
-  { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
 export function AppSidebar() {

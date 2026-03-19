@@ -3,10 +3,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Edit2, Trash2, Database } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import {
-  getApiV1KnowledgeSourcesQueryKey,
-  useDeleteApiV1KnowledgeSourcesId,
-  useGetApiV1KnowledgeSourcesSuspense,
-} from "@/gen";
+  getApiKnowledgeSourcesQueryKey,
+  useDeleteApiKnowledgeSourcesId,
+  useGetApiKnowledgeSourcesSuspense,
+} from "@/hooks/api";
 import { DialogType } from "@/dialogs";
 import { useDialog } from "@/hooks/use-dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -47,9 +47,9 @@ function KnowledgeSourceRowActions({
 
 export function KnowledgeSourceList() {
   const queryClient = useQueryClient();
-  const { data: rawSources, error } = useGetApiV1KnowledgeSourcesSuspense();
+  const { data: rawSources, error } = useGetApiKnowledgeSourcesSuspense();
   const sources = (rawSources as unknown as KnowledgeSource[]) ?? [];
-  const { mutate: deleteSource } = useDeleteApiV1KnowledgeSourcesId();
+  const { mutate: deleteSource } = useDeleteApiKnowledgeSourcesId();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
 
@@ -79,7 +79,7 @@ export function KnowledgeSourceList() {
                   onSuccess: () => {
                     toast({ title: "Knowledge Source deleted successfully" });
                     queryClient.invalidateQueries({
-                      queryKey: getApiV1KnowledgeSourcesQueryKey(),
+                      queryKey: getApiKnowledgeSourcesQueryKey(),
                     });
                     closeDialog(DialogType.CONFIRM);
                   },

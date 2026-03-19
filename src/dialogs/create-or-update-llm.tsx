@@ -9,11 +9,11 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import {
-  getApiV1LlmsQueryKey,
-  useGetApiV1LlmsSchema,
-  usePatchApiV1LlmsId,
-  usePostApiV1Llms,
-} from "@/gen";
+  getApiLlmsQueryKey,
+  useGetApiLlmsSchema,
+  usePatchApiLlmsId,
+  usePostApiLlms,
+} from "@/hooks/api";
 import { FormInput } from "@/components/form/input";
 import { FormSelect } from "@/components/form/select";
 import { Form } from "@/components/ui/form";
@@ -56,9 +56,9 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
 
   const queryClient = useQueryClient();
 
-  const { data: schemas = [] } = useGetApiV1LlmsSchema();
-  const { mutate: createLLM } = usePostApiV1Llms();
-  const { mutate: updateLLM } = usePatchApiV1LlmsId();
+  const { data: schemas = [] } = useGetApiLlmsSchema();
+  const { mutate: createLLM } = usePostApiLlms();
+  const { mutate: updateLLM } = usePatchApiLlmsId();
 
   const selectedProvider = useWatch({ control: form.control, name: "provider" });
   const currentSchema = schemas.find((s) => s.targetId === selectedProvider)?.schema;
@@ -70,7 +70,7 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
         {
           onSuccess: () => {
             toast({ title: "LLM updated successfully" });
-            queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiLlmsQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_LLM);
           },
           onError: () => toast({ title: "Failed to update LLM", variant: "destructive" }),
@@ -82,7 +82,7 @@ export const CreateOrUpdateLLMDialog = ({ llm }: CreateOrUpdateLLMDialogProps) =
         {
           onSuccess: () => {
             toast({ title: "LLM created successfully" });
-            queryClient.invalidateQueries({ queryKey: getApiV1LlmsQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiLlmsQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_LLM);
           },
           onError: () => toast({ title: "Failed to create LLM", variant: "destructive" }),

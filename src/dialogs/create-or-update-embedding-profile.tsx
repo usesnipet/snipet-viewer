@@ -18,14 +18,12 @@ import z from "zod";
 
 import type { EmbeddingProfile, LLM } from "@/types";
 import {
-  getApiV1EmbeddingProfilesSuspenseQueryKey,
-  useGetApiV1EmbeddingProfilesSplitterSchema,
-  useGetApiV1Llms,
-  useGetApiV1LlmsSchema,
-  useGetApiV1LlmsSuspense,
-  usePatchApiV1EmbeddingProfilesId,
-  usePostApiV1EmbeddingProfiles,
-} from "@/gen";
+  getApiEmbeddingProfilesSuspenseQueryKey,
+  useGetApiEmbeddingProfilesSplitterSchema, useGetApiLlmsSuspense,
+  usePatchApiEmbeddingProfilesId,
+  usePostApiEmbeddingProfiles
+} from "@/hooks/api";
+
 import { DialogType } from ".";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
@@ -59,7 +57,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
 
   const isEditing = embeddingProfile != null;
 
-  const { data: rawLlms } = useGetApiV1LlmsSuspense({ });
+  const { data: rawLlms } = useGetApiLlmsSuspense({ type: "EMBEDDING" });
   const llms = rawLlms as unknown as LLM[] | undefined;
 
   const llmOptions = useMemo(
@@ -91,9 +89,9 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
     },
   });
 
-  const { mutate: createEmbeddingProfile } = usePostApiV1EmbeddingProfiles();
-  const { mutate: updateEmbeddingProfile } = usePatchApiV1EmbeddingProfilesId();
-  const { data: splitterSchemas = [] } = useGetApiV1EmbeddingProfilesSplitterSchema();
+  const { mutate: createEmbeddingProfile } = usePostApiEmbeddingProfiles();
+  const { mutate: updateEmbeddingProfile } = usePatchApiEmbeddingProfilesId();
+  const { data: splitterSchemas = [] } = useGetApiEmbeddingProfilesSplitterSchema();
 
   const selectedSplitterType = useWatch({ control: form.control, name: "splitterType" });
   const currentSchema = splitterSchemas.find((s) => s.targetId === selectedSplitterType)?.schema ?? null;
@@ -124,7 +122,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
           onSuccess: () => {
             toast({ title: "Embedding profile updated successfully" });
             queryClient.invalidateQueries({
-              queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey(),
+              queryKey: getApiEmbeddingProfilesSuspenseQueryKey(),
             });
             closeDialog(DialogType.CREATE_OR_UPDATE_EMBEDDING_PROFILE);
           },
@@ -140,7 +138,7 @@ export const CreateOrUpdateEmbeddingProfileDialog = ({
         onSuccess: () => {
           toast({ title: "Embedding profile created successfully" });
           queryClient.invalidateQueries({
-            queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey(),
+              queryKey: getApiEmbeddingProfilesSuspenseQueryKey(),
           });
           closeDialog(DialogType.CREATE_OR_UPDATE_EMBEDDING_PROFILE);
         },

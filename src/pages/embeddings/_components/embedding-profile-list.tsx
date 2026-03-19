@@ -13,11 +13,11 @@ import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/lib/utils";
 import type { EmbeddingProfile, KnowledgeSource } from "@/types";
 import {
-  getApiV1EmbeddingProfilesSuspenseQueryKey,
-  useDeleteApiV1EmbeddingProfilesId,
-  useGetApiV1EmbeddingProfilesSuspense,
-  useGetApiV1KnowledgeSourcesSuspense,
-} from "@/gen";
+  getApiEmbeddingProfilesSuspenseQueryKey,
+  useDeleteApiEmbeddingProfilesId,
+  useGetApiEmbeddingProfilesSuspense,
+  useGetApiKnowledgeSourcesSuspense,
+} from "@/hooks/api";
 
 const columnHelper = createColumnHelper<EmbeddingProfile>();
 
@@ -54,10 +54,10 @@ export function EmbeddingProfileList() {
 
   // NOTE: The generated OpenAPI types for this list endpoint are currently incorrect.
   // We type-assert to the app's local EmbeddingProfile interface used elsewhere.
-  const { data: rawProfiles, error: profilesError } = useGetApiV1EmbeddingProfilesSuspense({ includeLLM: true });
+  const { data: rawProfiles, error: profilesError } = useGetApiEmbeddingProfilesSuspense({ includeLLM: true });
   const embeddingProfiles = rawProfiles as unknown as EmbeddingProfile[] | undefined;
 
-  const { data: rawSources } = useGetApiV1KnowledgeSourcesSuspense();
+  const { data: rawSources } = useGetApiKnowledgeSourcesSuspense();
   const knowledgeSources = rawSources as unknown as KnowledgeSource[] | undefined;
 
   const linkedCounts = useMemo(() => {
@@ -70,7 +70,7 @@ export function EmbeddingProfileList() {
     return counts;
   }, [embeddingProfiles, knowledgeSources]);
 
-  const { mutate: deleteEmbeddingProfile } = useDeleteApiV1EmbeddingProfilesId();
+  const { mutate: deleteEmbeddingProfile } = useDeleteApiEmbeddingProfilesId();
 
   const handleEdit = useCallback(
     (embeddingProfile: EmbeddingProfile) => {
@@ -98,7 +98,7 @@ export function EmbeddingProfileList() {
                   onSuccess: () => {
                     toast({ title: "Embedding profile deleted successfully" });
                     queryClient.invalidateQueries({
-                      queryKey: getApiV1EmbeddingProfilesSuspenseQueryKey(),
+                      queryKey: getApiEmbeddingProfilesSuspenseQueryKey(),
                     });
                     closeDialog(DialogType.CONFIRM);
                   },
@@ -159,7 +159,7 @@ export function EmbeddingProfileList() {
         id: "llm",
         header: "LLM",
         cell: ({ row }) => (
-            row.original.llm.name ?? "—"
+          row.original.llm?.name ?? "—"
         ),
       }),
       columnHelper.accessor("createdAt", {

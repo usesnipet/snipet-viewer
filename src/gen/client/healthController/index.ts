@@ -1,1 +1,0 @@
-export { getApiHealth } from "./getApiHealth.ts";

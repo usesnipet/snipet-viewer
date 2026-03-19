@@ -4,7 +4,6 @@ import { KnowledgeSourcePage } from "./pages/knowledge/knowledge-source-page";
 import { LLMPage } from "./pages/llm/llm-page";
 import { RerankerPage } from "./pages/reranker/reranker-page";
 import { EmbeddingPage } from "./pages/embeddings/embedding-page";
-import { ObservabilityPage } from "./pages/observability/observability-page";
 import { RootLayout } from "./components/layout/root";
 
 export default function App() {
@@ -18,7 +17,6 @@ export default function App() {
           <Route path="/llms" element={<LLMPage />} />
           <Route path="/rerankers" element={<RerankerPage />} />
           <Route path="/embeddings" element={<EmbeddingPage />} />
-          {/* <Route path="/observability" element={<ObservabilityPage />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

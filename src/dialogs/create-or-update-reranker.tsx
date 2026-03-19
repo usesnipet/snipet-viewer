@@ -5,12 +5,6 @@ import { Reranker } from "@/types";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import {
-  getApiV1RerankersQueryKey,
-  useGetApiV1RerankersSchema,
-  usePatchApiV1RerankersId,
-  usePostApiV1Rerankers,
-} from "@/gen";
 import { FormInput } from "@/components/form/input";
 import { FormSelect } from "@/components/form/select";
 import { Form } from "@/components/ui/form";
@@ -19,6 +13,7 @@ import { DialogType } from ".";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
+import { getApiRerankersQueryKey, useGetApiRerankersSchema, usePatchApiRerankersId, usePostApiRerankers } from "@/hooks/api";
 
 export type CreateOrUpdateRerankerDialogProps = {
   reranker?: Reranker;
@@ -47,10 +42,10 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
 
   const queryClient = useQueryClient();
 
-  const { data: schemas = [] } = useGetApiV1RerankersSchema();
+  const { data: schemas = [] } = useGetApiRerankersSchema();
 
-  const { mutate: createReranker } = usePostApiV1Rerankers();
-  const { mutate: updateReranker } = usePatchApiV1RerankersId();
+  const { mutate: createReranker } = usePostApiRerankers();
+  const { mutate: updateReranker } = usePatchApiRerankersId();
 
   const selectedType = useWatch({ control: form.control, name: "type" });
   const currentSchema = schemas.find((s) => s.targetId === selectedType)?.schema;
@@ -64,7 +59,7 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
         {
           onSuccess: () => {
             toast({ title: "Re-ranker updated successfully" });
-            queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiRerankersQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
           },
           onError: () => toast({ title: "Failed to update re-ranker", variant: "destructive" }),
@@ -76,7 +71,7 @@ export const CreateOrUpdateRerankerDialog = ({ reranker }: CreateOrUpdateReranke
         {
           onSuccess: () => {
             toast({ title: "Re-ranker created successfully" });
-            queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+            queryClient.invalidateQueries({ queryKey: getApiRerankersQueryKey() });
             closeDialog(DialogType.CREATE_OR_UPDATE_RERANKER);
           },
           onError: () => toast({ title: "Failed to create re-ranker", variant: "destructive" }),

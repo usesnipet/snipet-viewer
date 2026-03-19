@@ -1,0 +1,30 @@
+---
+description: Standardize API hooks by route in frontend
+globs: src/hooks/api/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# API Hooks by route
+
+- Organize hooks in `src/hooks/api/<route>/`.
+- Each file should contain one hook per endpoint, using this pattern: `use-<method>-<resource>.ts`.
+- Define query keys in the same file: `<action>QueryKey` (e.g. `getLLMQueryKey`).
+- For GET, use `useQuery`; for writes (POST/PATCH/PUT/DELETE), use `useMutation`.
+- Use `apiClient` and `extractApiData` from `src/hooks/api/api-client.ts`; avoid direct API calls outside this pattern.
+- Keep hooks thin: no UI business logic; only request call and minimal payload/response transformation.
+- Export hooks and query keys from the route folder `index.ts`.
+
+## Reference example
+
+```ts
+import { useQuery } from "@tanstack/react-query";
+import { apiClient, extractApiData } from "../api-client";
+
+export const getLLMQueryKey = () => ["get", "api", "llms"] as const;
+
+export const useGetLLMs = () =>
+  useQuery({
+    queryKey: getLLMQueryKey(),
+    queryFn: () => extractApiData(apiClient.api.llmsList()),
+  });
+```

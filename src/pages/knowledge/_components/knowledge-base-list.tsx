@@ -3,10 +3,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Edit2, Trash2, Database } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import {
-  getApiV1KnowledgeBasesQueryKey,
-  useDeleteApiV1KnowledgeBasesId,
-  useGetApiV1KnowledgeBasesSuspense,
-} from "@/gen";
+  getApiKnowledgeBasesQueryKey,
+  useDeleteApiKnowledgeBasesId,
+  useGetApiKnowledgeBasesSuspense,
+} from "@/hooks/api";
 import { DialogType } from "@/dialogs";
 import { useDialog } from "@/hooks/use-dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -46,8 +46,8 @@ function KnowledgeBaseRowActions({
 
 export function KnowledgeBaseList() {
   const queryClient = useQueryClient();
-  const { data: bases, error } = useGetApiV1KnowledgeBasesSuspense();
-  const { mutate: deleteBase } = useDeleteApiV1KnowledgeBasesId();
+  const { data: bases, error } = useGetApiKnowledgeBasesSuspense();
+  const { mutate: deleteBase } = useDeleteApiKnowledgeBasesId();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
 
@@ -77,7 +77,7 @@ export function KnowledgeBaseList() {
                   onSuccess: () => {
                     toast({ title: "Knowledge Base deleted successfully" });
                     queryClient.invalidateQueries({
-                      queryKey: getApiV1KnowledgeBasesQueryKey(),
+                      queryKey: getApiKnowledgeBasesQueryKey(),
                     });
                     closeDialog(DialogType.CONFIRM);
                   },
@@ -151,7 +151,7 @@ export function KnowledgeBaseList() {
   return (
     <DataTable<KnowledgeBase>
       columns={columns}
-      data={bases ?? []}
+      data={(bases ?? []) as KnowledgeBase[]}
       getRowId={(r) => r.id}
       error={!!error}
       errorMessage="Failed to load knowledge bases."

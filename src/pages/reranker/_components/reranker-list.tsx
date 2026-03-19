@@ -2,10 +2,10 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Edit2, Trash2, Layers } from "lucide-react";
 import { formatDate } from "../../../lib/utils";
 import {
-  getApiV1RerankersQueryKey,
-  useDeleteApiV1RerankersId,
-  useGetApiV1RerankersSuspense,
-} from "@/gen";
+  getApiRerankersQueryKey,
+  useDeleteApiRerankersId,
+  useGetApiRerankersSuspense,
+} from "@/hooks/api";
 import { DialogType } from "@/dialogs";
 import { useDialog } from "@/hooks/use-dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -47,8 +47,8 @@ function RerankerRowActions({
 
 export function RerankerList() {
   const queryClient = useQueryClient();
-  const { data: rerankers, error } = useGetApiV1RerankersSuspense();
-  const { mutate: deleteReranker } = useDeleteApiV1RerankersId();
+  const { data: rerankers, error } = useGetApiRerankersSuspense();
+  const { mutate: deleteReranker } = useDeleteApiRerankersId();
   const { openDialog, closeDialog } = useDialog();
   const { toast } = useToast();
 
@@ -77,7 +77,7 @@ export function RerankerList() {
               {
                 onSuccess: () => {
                   toast({ title: "Re-ranker deleted successfully" });
-                  queryClient.invalidateQueries({ queryKey: getApiV1RerankersQueryKey() });
+                  queryClient.invalidateQueries({ queryKey: getApiRerankersQueryKey() });
                   closeDialog(DialogType.CONFIRM);
                 },
                 onError: () => {
@@ -155,7 +155,7 @@ export function RerankerList() {
   return (
     <DataTable<Reranker>
       columns={columns}
-      data={rerankers ?? []}
+      data={(rerankers ?? []) as Reranker[]}
       getRowId={(r) => r.id}
       error={!!error}
       errorMessage="Failed to load re-rankers."
